@@ -24,13 +24,16 @@ const HomePage = () => {
           <LeadForm onReportReady={() => {
             setShowReport(true);
             setTimeout(() => {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              const reportSection = document.getElementById('report-section');
+              if (reportSection) {
+                reportSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
             }, 100);
           }} />
         </div>
 
         {showReport && (
-          <div id="report-section" className="relative z-10 w-full mt-16 animate-fade-in">
+          <div id="report-section" className="relative z-10 w-full mt-16 animate-fade-in min-h-screen scroll-mt-6">
             <div className="bg-white/5 backdrop-blur-2xl rounded-3xl p-6 md:p-10 shadow-[0_20px_40px_rgba(0,0,0,0.3)] border border-white/10">
                <WelcomeContent />
             </div>
