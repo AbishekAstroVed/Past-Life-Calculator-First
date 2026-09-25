@@ -19,10 +19,13 @@ const HomePage = () => {
         <header className="mb-6 md:mb-8">
           <img src="https://cdn.astroved.com/images/images-av/AstroVed-Logo.svg" alt="AstroVed Logo" className="h-8 md:h-10 w-auto drop-shadow-lg" />
         </header>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-start">
+        <div id="main-content" className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-start">
           <HeroContent />
           <LeadForm onReportReady={() => {
             setShowReport(true);
+            setTimeout(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
           }} />
         </div>
 

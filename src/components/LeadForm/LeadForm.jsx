@@ -234,8 +234,8 @@ const LeadForm = ({ onReportReady }) => {
   return (
     <>
       {isSubmitting && <LoadingOverlay />}
-      <div className="bg-white/5 backdrop-blur-2xl rounded-2xl overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.3)] border border-white/10 text-dark-navy w-full max-w-md mx-auto lg:mr-0 xl:ml-auto animate-float-slow" style={{ animationDelay: '0.2s' }}>
-      <div className="bg-gradient-to-r from-gold to-[#e3bb69] text-dark-navy p-3 md:p-4 text-center border-b border-white/20">
+      <div className="bg-white/5 backdrop-blur-2xl rounded-2xl overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.3)] border border-white/10 text-dark-navy w-full max-w-[500px] sm:max-w-[550px] lg:max-w-md xl:max-w-[500px] mx-auto lg:mr-0 xl:ml-auto animate-float-slow" style={{ animationDelay: '0.2s' }}>
+      <div className="bg-gradient-to-r from-gold to-[#e3bb69] text-dark-navy p-3 md:p-5 text-center border-b border-white/20">
         <h2 className="text-base md:text-lg m-0 uppercase tracking-widest font-bold drop-shadow-sm">Reveal My Past-Life Karma</h2>
       </div>
 
