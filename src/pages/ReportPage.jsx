@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import WelcomeContent from '../components/ReportDetails/WelcomeContent';
 
-const ReportPage = () => {
+const ReportPage = ({ embedded = false }) => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState(1);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -12,7 +12,7 @@ const ReportPage = () => {
   ];
 
   return (
-    <div className="relative z-10 w-full h-screen flex flex-col md:flex-row animate-fade-in overflow-hidden text-[#1a1a1a]">
+    <div className={`relative z-10 w-full ${embedded ? 'h-[800px]' : 'h-screen'} flex flex-col md:flex-row animate-fade-in overflow-hidden text-[#1a1a1a]`}>
 
       {/* Sidebar Re-open Button */}
       {!isSidebarOpen && (
@@ -65,15 +65,17 @@ const ReportPage = () => {
           </div>
 
           {/* Sidebar Footer */}
-          <div className="p-3 border-t border-gray-100 bg-white">
-            <button
-              onClick={() => navigate('/')}
-              className="w-full flex items-center justify-center gap-1.5 bg-[#F26C4F] text-white py-2.5 rounded-md font-bold text-[10px] tracking-wide hover:bg-[#E55B3E] transition-colors shadow-md"
-            >
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-              ENTER DIFFERENT DETAILS
-            </button>
-          </div>
+          {!embedded && (
+            <div className="p-3 border-t border-gray-100 bg-white">
+              <button
+                onClick={() => navigate('/')}
+                className="w-full flex items-center justify-center gap-1.5 bg-[#F26C4F] text-white py-2.5 rounded-md font-bold text-[10px] tracking-wide hover:bg-[#E55B3E] transition-colors shadow-md"
+              >
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                ENTER DIFFERENT DETAILS
+              </button>
+            </div>
+          )}
 
         </div>
       )}

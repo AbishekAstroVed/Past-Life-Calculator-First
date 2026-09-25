@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import HeroContent from '../components/HeroContent/HeroContent';
 import LeadForm from '../components/LeadForm/LeadForm';
 import Features from '../components/Features/Features';
 import ReportDetails from '../components/ReportDetails/ReportDetails';
 import Pricing from '../components/Pricing/Pricing';
 import Benefits from '../components/Benefits/Benefits';
+import WelcomeContent from '../components/ReportDetails/WelcomeContent'; // Import WelcomeContent
+
+import Testimonials from '../components/Testimonials/Testimonials';
+import FAQ from '../components/FAQ/FAQ';
 
 const HomePage = () => {
+  const [showReport, setShowReport] = useState(false);
+
   return (
     <>
       <div className="relative z-10 max-w-[1200px] mx-auto p-6 md:p-8 w-full flex flex-col animate-fade-in">
@@ -15,8 +21,18 @@ const HomePage = () => {
         </header>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-start">
           <HeroContent />
-          <LeadForm />
+          <LeadForm onReportReady={() => {
+            setShowReport(true);
+          }} />
         </div>
+
+        {showReport && (
+          <div id="report-section" className="relative z-10 w-full mt-16 animate-fade-in">
+            <div className="bg-white/5 backdrop-blur-2xl rounded-3xl p-6 md:p-10 shadow-[0_20px_40px_rgba(0,0,0,0.3)] border border-white/10">
+               <WelcomeContent />
+            </div>
+          </div>
+        )}
       </div>
 
       <Features />
@@ -32,6 +48,9 @@ const HomePage = () => {
         </div>
         <Benefits />
       </div>
+
+      <Testimonials />
+      <FAQ />
     </>
   );
 };

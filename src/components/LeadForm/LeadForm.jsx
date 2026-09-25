@@ -169,8 +169,9 @@ const CityAutocomplete = ({ value, country, onChange, name, placeholder }) => {
   );
 };
 
-const LeadForm = () => {
+const LeadForm = ({ onReportReady }) => {
   const navigate = useNavigate();
+  const [showReport, setShowReport] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     gender: '',
@@ -199,7 +200,12 @@ const LeadForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setTimeout(() => {
-      navigate('/report');
+      setIsSubmitting(false);
+      if (onReportReady) {
+        onReportReady();
+      } else {
+        setShowReport(true);
+      }
     }, 1500);
   };
 
