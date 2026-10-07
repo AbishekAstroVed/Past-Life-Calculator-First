@@ -47,7 +47,7 @@ const CustomSelect = ({ options, value, onChange, name, placeholder, searchable 
             <div className="sticky top-0 bg-white p-2 border-b border-gray-100 z-20">
               <input
                 type="text"
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-gold"
+                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-[#6868f9]"
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -62,7 +62,7 @@ const CustomSelect = ({ options, value, onChange, name, placeholder, searchable 
             filteredOptions.map((option) => (
               <div
                 key={option.value}
-                className={`px-3 py-2 text-sm cursor-pointer hover:bg-gold/10 transition-colors ${value === option.value ? 'bg-gold/5 font-semibold text-gold' : 'text-dark-navy'}`}
+                className={`px-3 py-2 text-sm cursor-pointer hover:bg-[#6868f9]/10 transition-colors ${value === option.value ? 'bg-[#6868f9]/5 font-semibold text-[#6868f9]' : 'text-dark-navy'}`}
                 onClick={() => {
                   onChange({ target: { name, value: option.value } });
                   setIsOpen(false);
@@ -139,7 +139,7 @@ const CityAutocomplete = ({ value, country, onChange, name, placeholder }) => {
         onChange={handleInputChange}
         onFocus={() => { if (value && value.length >= 2) setIsOpen(true); }}
         placeholder={placeholder}
-        className="w-full px-3 py-2 md:py-2.5 border border-gray-200 rounded-md font-sans text-sm bg-white text-dark-navy transition-all focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20"
+        className="w-full px-3 py-2 md:py-2.5 border border-gray-200 rounded-md font-sans text-sm bg-white text-dark-navy transition-all focus:outline-none focus:border-[#6868f9] focus:ring-2 focus:ring-[#6868f9]/20"
         autoComplete="off"
       />
       {isOpen && (value.length >= 2) && (
@@ -152,7 +152,7 @@ const CityAutocomplete = ({ value, country, onChange, name, placeholder }) => {
             options.map((option, index) => (
               <div
                 key={`${option.City}-${index}`}
-                className="px-3 py-2 cursor-pointer hover:bg-gold/10 transition-colors text-dark-navy border-b border-gray-50 last:border-b-0"
+                className="px-3 py-2 cursor-pointer hover:bg-[#6868f9]/10 transition-colors text-dark-navy border-b border-gray-50 last:border-b-0"
                 onClick={() => {
                   onChange({ target: { name, value: option.City } });
                   setIsOpen(false);
@@ -209,8 +209,8 @@ const LeadForm = ({ onReportReady }) => {
     }, 1500);
   };
 
-  const inputClasses = "w-full px-3 py-2 md:py-2.5 border border-gray-200 rounded-md font-sans text-sm bg-white text-dark-navy transition-all focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20";
-  const labelClasses = "text-[10px] md:text-xs font-semibold text-dark-navy uppercase tracking-wide";
+  const inputClasses = "w-full px-2.5 py-1.5 md:py-2 border border-gray-200 rounded-md font-sans text-sm bg-white text-dark-navy transition-all focus:outline-none focus:border-[#6868f9] focus:ring-2 focus:ring-[#6868f9]/20";
+  const labelClasses = "text-[9px] md:text-[10px] font-semibold text-dark-navy uppercase tracking-wide";
 
   // Option lists
   const genderOptions = [
@@ -234,18 +234,18 @@ const LeadForm = ({ onReportReady }) => {
   return (
     <>
       {isSubmitting && <LoadingOverlay />}
-      <div className="bg-white/5 backdrop-blur-2xl rounded-2xl overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.3)] border border-white/10 text-dark-navy w-full max-w-[500px] sm:max-w-[550px] lg:max-w-md xl:max-w-[500px] mx-auto lg:mr-0 xl:ml-auto animate-float-slow" style={{ animationDelay: '0.2s' }}>
-      <div className="bg-gradient-to-r from-gold to-[#e3bb69] text-dark-navy p-3 md:p-5 text-center border-b border-white/20">
-        <h2 className="text-base md:text-lg m-0 uppercase tracking-widest font-bold drop-shadow-sm">Reveal My Past-Life Karma</h2>
+      <div className="bg-white/5 backdrop-blur-2xl rounded-2xl overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.15)] border border-black/5 text-dark-navy w-full max-w-[90%] sm:max-w-sm md:max-w-[420px] lg:max-w-[400px] mx-auto lg:mr-0 xl:ml-auto animate-float-slow" style={{ animationDelay: '0.2s' }}>
+      <div className="bg-[#6868f9] text-white p-2.5 md:p-3 text-center border-b border-white/20">
+        <h2 className="text-sm md:text-base m-0 uppercase tracking-widest font-bold drop-shadow-sm">Reveal My Past-Life Karma</h2>
       </div>
 
-      <div className="p-5 md:p-6 bg-off-white/95">
-        <h3 className="text-lg md:text-xl mb-1 text-dark-navy font-bold tracking-tight">Enter Your Birth Details</h3>
-        <p className="text-xs text-gray-600 mb-4 md:mb-5">Get your personalized karma report with accurate predictions.</p>
+      <div className="p-4 md:p-5 bg-off-white/95">
+        <h3 className="text-base md:text-lg mb-1 text-dark-navy font-bold tracking-tight">Enter Your Birth Details</h3>
+        <p className="text-[11px] md:text-xs text-gray-600 mb-3 md:mb-4">Get your personalized karma report with accurate predictions.</p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3 md:gap-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            <div className="flex flex-col gap-2">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 md:gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+            <div className="flex flex-col gap-1.5">
               <label className={labelClasses}>Full Name</label>
               <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Your Name" required className={inputClasses} />
             </div>
@@ -261,47 +261,47 @@ const LeadForm = ({ onReportReady }) => {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 relative z-[19]">
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
               <label className={labelClasses}>Day</label>
               <CustomSelect name="day" value={formData.day} onChange={handleChange} options={dayOptions} />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
               <label className={labelClasses}>Month</label>
               <CustomSelect name="month" value={formData.month} onChange={handleChange} options={monthOptions} />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
               <label className={labelClasses}>Year</label>
               <CustomSelect name="year" value={formData.year} onChange={handleChange} options={yearOptions} />
             </div>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 relative z-[18]">
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
               <label className={labelClasses}>Hour</label>
               <CustomSelect name="hour" value={formData.hour} onChange={handleChange} options={hourOptions} />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
               <label className={labelClasses}>Minute</label>
               <CustomSelect name="minute" value={formData.minute} onChange={handleChange} options={minuteOptions} />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
               <label className={labelClasses}>AM / PM</label>
               <CustomSelect name="ampm" value={formData.ampm} onChange={handleChange} options={ampmOptions} />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 relative z-[17]">
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
               <label className={labelClasses}>Country</label>
               <CustomSelect name="country" value={formData.country} onChange={handleChange} options={countryOptions} searchable={true} />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
               <label className={labelClasses}>City</label>
               <CityAutocomplete name="city" value={formData.city} country={formData.country} onChange={handleChange} placeholder="Type your city" />
             </div>
           </div>
 
-          <button type="submit" disabled={isSubmitting} className="relative group overflow-hidden bg-gradient-to-r from-gold to-[#c59842] text-white border-none rounded-lg px-5 py-3.5 md:py-4 text-sm md:text-base font-bold cursor-pointer mt-2 transition-all shadow-[0_10px_20px_rgba(214,168,79,0.3)] hover:shadow-[0_15px_30px_rgba(214,168,79,0.4)] hover:-translate-y-0.5 active:translate-y-px">
+          <button type="submit" disabled={isSubmitting} className="relative group overflow-hidden bg-[#6868f9] text-white border-none rounded-lg px-4 py-2.5 md:py-3 text-sm md:text-base font-bold cursor-pointer mt-2 transition-all shadow-[0_10px_20px_rgba(104,104,249,0.3)] hover:shadow-[0_15px_30px_rgba(104,104,249,0.4)] hover:-translate-y-0.5 active:translate-y-px">
             <span className="relative z-10 flex items-center justify-center gap-2">
               Reveal My Past-Life Karma
               <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>

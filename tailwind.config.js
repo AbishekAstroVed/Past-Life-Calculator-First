@@ -9,9 +9,10 @@ export default {
       colors: {
         'dark-navy': '#17152F',
         'deep-purple': '#29204D',
-        'gold': '#D6A84F',
+        'gold': '#6868f9',
         'light-purple': '#A99BE8',
         'off-white': '#FAF8F2',
+        'brand': '#6868f9',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
