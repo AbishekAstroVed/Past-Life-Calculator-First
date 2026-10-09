@@ -61,14 +61,24 @@ const HomePage = () => {
 
       <Features />
 
-      <div className="relative z-10 max-w-[1200px] mx-auto p-6 md:p-8 w-full mt-4 md:mt-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-16 items-center mb-12 md:mb-20">
-          <div className="lg:col-span-2">
-            <ReportDetails />
+      <div className="relative z-10 max-w-[1200px] mx-auto p-6 md:p-8 w-full mt-4 md:mt-12">
+        <div className="text-center mb-10 md:mb-16">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="w-12 h-[2px] bg-[#C04921]"></div>
+            <svg className="w-6 h-6 text-[#C04921]" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2.5C11.5 4.5 9 7 6.5 8C9 8.5 10.5 11 12 14C13.5 11 15 8.5 17.5 8C15 7 12.5 4.5 12 2.5Z" />
+              <path d="M12 21.5C9.5 21.5 5 19 4 14C5.5 15.5 8 16 11 16C10 14 9.5 12 10.5 10.5C12.5 13 14.5 15.5 19 13.5C18 17 15 21.5 12 21.5Z" opacity="0.8"/>
+            </svg>
+            <div className="w-12 h-[2px] bg-[#C04921]"></div>
           </div>
-          <div className="lg:col-span-1">
-            <Pricing />
-          </div>
+          <h2 className="text-3xl md:text-5xl text-dark-navy font-bold font-serif mb-4 drop-shadow-sm">What's Inside <span className="text-[#C04921]">Your Report</span></h2>
+          <p className="text-gray-600 text-base md:text-lg max-w-lg mx-auto">A complete, personalised reading of your karmic story, broken down into 6 profound chapters.</p>
+        </div>
+        <div className="mb-12 md:mb-20">
+          <ReportDetails />
+        </div>
+        <div className="flex justify-center mb-12 md:mb-20">
+          <Pricing />
         </div>
         <Benefits />
       </div>
