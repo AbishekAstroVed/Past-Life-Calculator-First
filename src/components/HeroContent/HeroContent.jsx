@@ -1,61 +1,63 @@
 import React from 'react';
 
-const CheckIcon = ({ delay }) => (
-    <svg
-      className="w-5 h-5 text-[#6868f9] animate-pulse-glow shrink-0"
-      style={{ animationDelay: delay }}
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-    </svg>
-);
-
-const HeroContent = () => {
+const HeroContent = ({ onCtaClick }) => {
   return (
-    <div className="flex flex-col gap-6 animate-fade-in-up">
-      <div className="flex items-center gap-2 text-xs font-semibold tracking-widest text-[#6868f9] uppercase">
-        <span className="w-2 h-2 bg-[#6868f9] rounded-full inline-block"></span>
+    <div className="flex flex-col gap-6 animate-fade-in-up font-sans">
+      <div className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-semibold tracking-[0.2em] text-[#C04921] uppercase w-fit mt-4">
+        <span className="text-[#C04921] text-lg leading-none mb-1">•</span>
         PAST LIFE & KARMA
       </div>
 
-      <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] text-dark-navy m-0">
-        What karma did <span className="text-[#6868f9] italic animate-pulse-glow inline-block">you</span> carry into this life?
+      <h1 className="text-4xl sm:text-5xl lg:text-[4.5rem] font-serif font-bold leading-[1.1] text-[#1a1a1a] tracking-tight m-0">
+        What karma did<br className="hidden sm:block" /> <span className="text-[#C04921]">you</span> carry into this<br className="hidden sm:block" /> life?
       </h1>
 
-      <p className="text-lg text-light-purple max-w-[90%]">
-        Your Ketu, 12th house and the Rahu-Ketu axis reveal where your soul has been. Discover your past-life pattern — free, in seconds.
+      <p className="text-base md:text-lg text-[#333333] max-w-[95%] leading-relaxed mt-2">
+        Your Ketu, 12th house and the Rahu-Ketu axis reveal<br className="hidden lg:block" /> where your soul has been. Discover your past-life pattern<br className="hidden lg:block" /> — free, in seconds.
       </p>
 
-      <div className="flex flex-wrap gap-y-4 gap-x-8 mt-4 mb-8">
-        <div className="flex items-center gap-2 text-[0.95rem] font-medium text-dark-navy">
-          <CheckIcon delay="0s" />
+      {/* Checkmarks */}
+      <div className="flex flex-wrap items-center gap-4 text-[13px] md:text-sm text-gray-800 font-medium mt-1">
+        <div className="flex items-center gap-1.5">
+          <svg className="w-3.5 h-3.5 text-[#C04921]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
           Ketu & 12th house
         </div>
-        <div className="flex items-center gap-2 text-[0.95rem] font-medium text-dark-navy">
-          <CheckIcon delay="1s" />
+        <div className="flex items-center gap-1.5">
+          <svg className="w-3.5 h-3.5 text-[#C04921]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
           Your past-life theme
         </div>
-        <div className="flex items-center gap-2 text-[0.95rem] font-medium text-dark-navy">
-          <CheckIcon delay="2s" />
+        <div className="flex items-center gap-1.5">
+          <svg className="w-3.5 h-3.5 text-[#C04921]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
           Free, instant result
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 md:gap-8 border-t border-light-purple/20 pt-6 mt-4">
-        <div className="flex flex-col gap-1">
-          <span className="text-xs text-light-purple uppercase tracking-wider">READS</span>
-          <span className="font-serif text-lg font-semibold text-dark-navy">Ketu + 12th</span>
+      <div className="mt-2 flex flex-col items-start">
+        <button
+          type="button"
+          onClick={onCtaClick}
+          className="bg-[#C04921] hover:bg-[#a63d1a] text-white border-none rounded-md px-6 py-3.5 text-base font-semibold cursor-pointer transition-all w-full sm:w-auto text-center inline-block"
+        >
+          <span className="flex items-center justify-center gap-2">
+            Reveal My Past-Life Karma
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </span>
+        </button>
+      </div>
+
+      {/* Stats Section */}
+      <div className="flex flex-row items-center gap-8 md:gap-12 mt-6">
+        <div>
+          <span className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold block mb-1">READS</span>
+          <span className="font-mono text-sm md:text-base font-bold text-[#1a1a1a]">Ketu + 12th</span>
         </div>
-        <div className="flex flex-col gap-1">
-          <span className="text-xs text-light-purple uppercase tracking-wider">REVEALS</span>
-          <span className="font-serif text-lg font-semibold text-dark-navy">Past-life theme</span>
+        <div>
+          <span className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold block mb-1">REVEALS</span>
+          <span className="font-mono text-sm md:text-base font-bold text-[#1a1a1a]">Past-life theme</span>
         </div>
-        <div className="flex flex-col gap-1">
-          <span className="text-xs text-light-purple uppercase tracking-wider">SHOWS</span>
-          <span className="font-serif text-lg font-semibold text-dark-navy">Soul's direction</span>
+        <div>
+          <span className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold block mb-1">SHOWS</span>
+          <span className="font-mono text-sm md:text-base font-bold text-[#1a1a1a]">Soul's direction</span>
         </div>
       </div>
     </div>

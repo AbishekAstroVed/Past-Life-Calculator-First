@@ -174,14 +174,13 @@ const LeadForm = ({ onReportReady }) => {
   const [showReport, setShowReport] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
-    gender: '',
+    gender: 'male',
     email: '',
-    day: '1',
-    month: 'Jan',
-    year: '2000',
-    hour: '12',
-    minute: '00',
-    ampm: 'AM',
+    day: '',
+    month: '',
+    year: '',
+    hour: '',
+    minute: '',
     country: 'India',
     city: ''
   });
@@ -209,8 +208,8 @@ const LeadForm = ({ onReportReady }) => {
     }, 1500);
   };
 
-  const inputClasses = "w-full px-2.5 py-1.5 md:py-2 border border-gray-200 rounded-md font-sans text-sm bg-white text-dark-navy transition-all focus:outline-none focus:border-[#6868f9] focus:ring-2 focus:ring-[#6868f9]/20";
-  const labelClasses = "text-[9px] md:text-[10px] font-semibold text-dark-navy uppercase tracking-wide";
+  const inputClasses = "w-full px-3 py-2.5 md:py-3 border border-gray-200 rounded-md font-sans text-[13px] md:text-sm bg-gray-50/50 text-gray-800 transition-all focus:outline-none focus:border-[#C04921] focus:ring-1 focus:ring-[#C04921] placeholder-gray-400";
+  const labelClasses = "text-[12px] md:text-[13px] font-bold text-gray-800 tracking-tight block mb-2";
 
   // Option lists
   const genderOptions = [
@@ -224,9 +223,8 @@ const LeadForm = ({ onReportReady }) => {
     const year = String(new Date().getFullYear() - i);
     return { value: year, label: year };
   });
-  const hourOptions = [...Array(12)].map((_, i) => ({ value: String(i + 1), label: String(i + 1).padStart(2, '0') }));
+  const hourOptions = [...Array(24)].map((_, i) => ({ value: String(i), label: String(i).padStart(2, '0') }));
   const minuteOptions = [...Array(60)].map((_, i) => ({ value: String(i), label: String(i).padStart(2, '0') }));
-  const ampmOptions = [{ value: 'AM', label: 'AM' }, { value: 'PM', label: 'PM' }];
 
   const uniqueCountries = Array.from(new Set(countryData.Countries.map(c => c.CountryName1)));
   const countryOptions = uniqueCountries.map(name => ({ value: name, label: name }));
@@ -234,83 +232,67 @@ const LeadForm = ({ onReportReady }) => {
   return (
     <>
       {isSubmitting && <LoadingOverlay />}
-      <div className="bg-white/5 backdrop-blur-2xl rounded-2xl overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.15)] border border-black/5 text-dark-navy w-full max-w-[90%] sm:max-w-sm md:max-w-[420px] lg:max-w-[400px] mx-auto lg:mr-0 xl:ml-auto animate-float-slow" style={{ animationDelay: '0.2s' }}>
-      <div className="bg-[#6868f9] text-white p-2.5 md:p-3 text-center border-b border-white/20">
-        <h2 className="text-sm md:text-base m-0 uppercase tracking-widest font-bold drop-shadow-sm">Reveal My Past-Life Karma</h2>
-      </div>
+      <div className="w-full max-w-xl mx-auto flex flex-col items-center">
+        
+        {/* Title Section */}
+        <div className="text-center mb-8 px-4">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1a1a1a] leading-tight mb-3">
+            See Your Past-Life Karma,<br />Free
+          </h2>
+          <p className="text-[15px] md:text-base text-[#555555] mx-auto leading-relaxed">
+            Your birth details stay private. We use them only to read your<br />Ketu, Rahu and 12th house.
+          </p>
+        </div>
 
-      <div className="p-4 md:p-5 bg-off-white/95">
-        <h3 className="text-base md:text-lg mb-1 text-dark-navy font-bold tracking-tight">Enter Your Birth Details</h3>
-        <p className="text-[11px] md:text-xs text-gray-600 mb-3 md:mb-4">Get your personalized karma report with accurate predictions.</p>
-
-        <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 md:gap-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
-            <div className="flex flex-col gap-1.5">
-              <label className={labelClasses}>Full Name</label>
+        {/* Form Card */}
+        <div className="bg-white rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.06)] border border-gray-100 p-6 md:p-8 w-full">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            
+            {/* Name & Gender */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 relative z-[20]">
               <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Your Name" required className={inputClasses} />
+              <CustomSelect name="gender" value={formData.gender} onChange={handleChange} options={genderOptions} placeholder="Gender" />
             </div>
-            <div className="flex flex-col gap-2 relative z-[20]">
-              <label className={labelClasses}>Gender</label>
-              <CustomSelect name="gender" value={formData.gender} onChange={handleChange} options={genderOptions} placeholder="Select Gender" />
-            </div>
-          </div>
 
-          <div className="flex flex-col gap-2 w-full">
-            <label className={labelClasses}>Email Address</label>
-            <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Your Email" required className={inputClasses} />
-          </div>
+            {/* Birth Date */}
+            <div className="flex flex-col relative z-[19]">
+              <label className={labelClasses}>Select Your Birth Date</label>
+              <div className="grid grid-cols-3 gap-3 sm:gap-4">
+                <CustomSelect name="day" value={formData.day} onChange={handleChange} options={dayOptions} placeholder="DD" />
+                <CustomSelect name="month" value={formData.month} onChange={handleChange} options={monthOptions} placeholder="Birth Month" />
+                <CustomSelect name="year" value={formData.year} onChange={handleChange} options={yearOptions} placeholder="YYYY" />
+              </div>
+            </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 relative z-[19]">
-            <div className="flex flex-col gap-1.5">
-              <label className={labelClasses}>Day</label>
-              <CustomSelect name="day" value={formData.day} onChange={handleChange} options={dayOptions} />
+            {/* Birth Time */}
+            <div className="flex flex-col relative z-[18]">
+              <label className={labelClasses}>Select Your Birth Time</label>
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                <CustomSelect name="hour" value={formData.hour} onChange={handleChange} options={hourOptions} placeholder="Birth Hour" />
+                <CustomSelect name="minute" value={formData.minute} onChange={handleChange} options={minuteOptions} placeholder="Birth Minute" />
+              </div>
             </div>
-            <div className="flex flex-col gap-1.5">
-              <label className={labelClasses}>Month</label>
-              <CustomSelect name="month" value={formData.month} onChange={handleChange} options={monthOptions} />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label className={labelClasses}>Year</label>
-              <CustomSelect name="year" value={formData.year} onChange={handleChange} options={yearOptions} />
-            </div>
-          </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 relative z-[18]">
-            <div className="flex flex-col gap-1.5">
-              <label className={labelClasses}>Hour</label>
-              <CustomSelect name="hour" value={formData.hour} onChange={handleChange} options={hourOptions} />
+            {/* Birth Place */}
+            <div className="flex flex-col relative z-[17]">
+              <label className={labelClasses}>Select Your Birth Place</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <CustomSelect name="country" value={formData.country} onChange={handleChange} options={countryOptions} searchable={true} placeholder="Country" />
+                <CityAutocomplete name="city" value={formData.city} country={formData.country} onChange={handleChange} placeholder="Type Birth City/District" />
+              </div>
             </div>
-            <div className="flex flex-col gap-1.5">
-              <label className={labelClasses}>Minute</label>
-              <CustomSelect name="minute" value={formData.minute} onChange={handleChange} options={minuteOptions} />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label className={labelClasses}>AM / PM</label>
-              <CustomSelect name="ampm" value={formData.ampm} onChange={handleChange} options={ampmOptions} />
-            </div>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 relative z-[17]">
-            <div className="flex flex-col gap-1.5">
-              <label className={labelClasses}>Country</label>
-              <CustomSelect name="country" value={formData.country} onChange={handleChange} options={countryOptions} searchable={true} />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label className={labelClasses}>City</label>
-              <CityAutocomplete name="city" value={formData.city} country={formData.country} onChange={handleChange} placeholder="Type your city" />
-            </div>
-          </div>
-
-          <button type="submit" disabled={isSubmitting} className="relative group overflow-hidden bg-[#6868f9] text-white border-none rounded-lg px-4 py-2.5 md:py-3 text-sm md:text-base font-bold cursor-pointer mt-2 transition-all shadow-[0_10px_20px_rgba(104,104,249,0.3)] hover:shadow-[0_15px_30px_rgba(104,104,249,0.4)] hover:-translate-y-0.5 active:translate-y-px">
-            <span className="relative z-10 flex items-center justify-center gap-2">
+            {/* Submit Button */}
+            <button 
+              type="submit" 
+              disabled={isSubmitting} 
+              className="mt-3 w-full bg-[#C04921] hover:bg-[#a63d1a] text-white border-none rounded-md py-3.5 md:py-4 text-base font-bold cursor-pointer transition-colors"
+            >
               Reveal My Past-Life Karma
-              <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-            </span>
-            <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
-          </button>
-        </form>
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
     </>
   );
 };

@@ -6,8 +6,8 @@ const WelcomeContent = () => {
       
       {/* 1. Document Header */}
       <div className="flex items-start gap-4 mb-10">
-        <div className="w-12 h-12 rounded-xl bg-[#6868f9]/20 border border-[#6868f9]/30 flex items-center justify-center flex-shrink-0 mt-1">
-          <svg className="w-6 h-6 text-[#6868f9]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+        <div className="w-12 h-12 rounded-xl bg-[#C04921]/20 border border-[#C04921]/30 flex items-center justify-center flex-shrink-0 mt-1">
+          <svg className="w-6 h-6 text-[#C04921]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
         </div>
         <div>
           <div className="text-[11px] font-bold text-gray-600 uppercase tracking-widest mb-2">Past Life · Ketu & 12th House</div>
@@ -18,18 +18,18 @@ const WelcomeContent = () => {
       <div className="w-full h-px bg-black/5 mb-8"></div>
 
       {/* CTA Block (Moved to Top) */}
-      <div className="bg-gradient-to-br from-[#f8f6ff] to-[#f0f4ff] border border-[#e5e7ff] rounded-[24px] p-8 md:p-12 text-center flex flex-col items-center justify-center shadow-[0_15px_40px_rgba(104,104,249,0.08)] relative overflow-hidden mb-12">
+      <div className="bg-gradient-to-br from-white to-[#FAF8F2] border border-gray-100 rounded-[24px] p-8 md:p-12 text-center flex flex-col items-center justify-center shadow-[0_15px_40px_rgba(192,73,33,0.05)] relative overflow-hidden mb-12">
         <div className="absolute -top-20 -right-20 w-40 h-40 bg-white rounded-full blur-3xl"></div>
         <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-white rounded-full blur-3xl"></div>
         
         <h2 className="text-2xl md:text-3xl font-serif font-bold text-dark-navy mb-4 relative z-10">
-          This Is Just a Glimpse. <span className="text-[#6868f9]">See Your Whole Karmic Story.</span>
+          This Is Just a Glimpse. <span className="text-[#C04921]">See Your Whole Karmic Story.</span>
         </h2>
         <p className="text-gray-600 max-w-2xl text-sm md:text-base leading-relaxed mb-8 relative z-10">
           Your free result reveals the theme. The full Past Life Report decodes your karmic debts, the relationships carried over, why patterns repeat, and the remedies to clear them.
         </p>
         
-        <button className="relative overflow-hidden bg-[#6868f9] text-white border-none rounded-xl px-8 py-4 text-base md:text-lg font-bold cursor-pointer transition-all hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(104,104,249,0.25)] z-10 group hover:bg-[#5252d8]">
+        <button className="relative overflow-hidden bg-[#C04921] text-white border-none rounded-xl px-8 py-4 text-base md:text-lg font-bold cursor-pointer transition-all hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(192,73,33,0.25)] z-10 group hover:bg-[#a63d1a]">
           <span className="relative z-10 flex items-center justify-center gap-2 drop-shadow-sm">
             Get My Past Life Report
             <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
@@ -58,10 +58,10 @@ const WelcomeContent = () => {
                  <line x1="0" y1="50%" x2="50%" y2="0" />
                </svg>
                {/* Highlight Triangle */}
-               <svg className="absolute inset-0 w-full h-full text-[#6868f9]/10 fill-current" viewBox="0 0 100 100" preserveAspectRatio="none">
+               <svg className="absolute inset-0 w-full h-full text-[#C04921]/10 fill-current" viewBox="0 0 100 100" preserveAspectRatio="none">
                  <polygon points="50,0 100,0 50,50" />
                </svg>
-               <svg className="absolute inset-0 w-full h-full text-[#6868f9]" stroke="currentColor" strokeWidth="2" viewBox="0 0 100 100" preserveAspectRatio="none">
+               <svg className="absolute inset-0 w-full h-full text-[#C04921]" stroke="currentColor" strokeWidth="2" viewBox="0 0 100 100" preserveAspectRatio="none">
                  <polygon points="50,0 100,0 50,50" fill="none" />
                </svg>
                
@@ -75,15 +75,15 @@ const WelcomeContent = () => {
                <div className="absolute bottom-1/4 right-2 text-gray-600">7</div>
                <div className="absolute top-1/2 right-8 text-gray-600">8</div>
                <div className="absolute top-1/4 right-2 text-gray-600">9</div>
-               <div className="absolute top-2 right-1/4 text-[#6868f9] font-bold">10</div>
+               <div className="absolute top-2 right-1/4 text-[#C04921] font-bold">10</div>
                <div className="absolute top-8 right-[30%] text-gray-600">11</div>
 
                <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-gray-200">Mo</div>
                <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 font-bold text-gray-200">Me Ve</div>
-               <div className="absolute top-8 right-8 font-bold text-[#6868f9]">Ju<sup className="font-normal text-[8px]">R</sup> Ra<sup className="font-normal text-[8px]">R</sup></div>
+               <div className="absolute top-8 right-8 font-bold text-[#C04921]">Ju<sup className="font-normal text-[8px]">R</sup> Ra<sup className="font-normal text-[8px]">R</sup></div>
                <div className="absolute bottom-[35%] left-8 font-bold text-gray-200">Ma</div>
-               <div className="absolute bottom-8 left-1/4 font-bold text-[#6868f9]/70">Ke</div>
-               <div className="absolute bottom-[20%] right-1/4 font-bold text-gray-200">Su <span className="text-[#6868f9]">Sa</span></div>
+               <div className="absolute bottom-8 left-1/4 font-bold text-[#C04921]/70">Ke</div>
+               <div className="absolute bottom-[20%] right-1/4 font-bold text-gray-200">Su <span className="text-[#C04921]">Sa</span></div>
             </div>
           </div>
 
@@ -98,15 +98,15 @@ const WelcomeContent = () => {
               
               <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">1</div><div className="text-[8px] text-gray-600">AQUARIUS</div><div className="absolute bottom-1 left-1 font-bold text-xs text-gray-600">Mo</div></div>
               <div className="col-span-2 row-span-2 flex items-center justify-center text-gray-600 font-serif text-lg">D1</div>
-              <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">6</div><div className="text-[8px] text-gray-600">CANCER</div><div className="absolute bottom-1 left-1 font-bold text-xs text-[#6868f9]/70">Ke</div></div>
+              <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">6</div><div className="text-[8px] text-gray-600">CANCER</div><div className="absolute bottom-1 left-1 font-bold text-xs text-[#C04921]/70">Ke</div></div>
               
-              <div className="border border-black/5 p-1 bg-[#6868f9]/10 border-[#6868f9] relative"><div className="font-bold text-[#6868f9]">12</div><div className="text-[8px] text-[#6868f9]/70">CAPRICORN</div><div className="absolute bottom-1 left-1 font-bold text-xs text-[#6868f9]">Ju<sup className="font-normal text-[8px]">R</sup> Ra<sup className="font-normal text-[8px]">R</sup></div></div>
+              <div className="border border-black/5 p-1 bg-[#C04921]/10 border-[#C04921] relative"><div className="font-bold text-[#C04921]">12</div><div className="text-[8px] text-[#C04921]/70">CAPRICORN</div><div className="absolute bottom-1 left-1 font-bold text-xs text-[#C04921]">Ju<sup className="font-normal text-[8px]">R</sup> Ra<sup className="font-normal text-[8px]">R</sup></div></div>
               <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">7</div><div className="text-[8px] text-gray-600">LEO</div><div className="absolute bottom-1 left-1 font-bold text-xs text-gray-600">Me Ve</div></div>
               
               <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">11</div><div className="text-[8px] text-gray-600">SAGITTARIUS</div></div>
               <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">10</div><div className="text-[8px] text-gray-600">SCORPIO</div></div>
               <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">9</div><div className="text-[8px] text-gray-600">LIBRA</div></div>
-              <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">8</div><div className="text-[8px] text-gray-600">VIRGO</div><div className="absolute bottom-1 left-1 font-bold text-xs text-gray-600">Su <span className="text-[#6868f9]">Sa</span></div></div>
+              <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">8</div><div className="text-[8px] text-gray-600">VIRGO</div><div className="absolute bottom-1 left-1 font-bold text-xs text-gray-600">Su <span className="text-[#C04921]">Sa</span></div></div>
             </div>
           </div>
         </div>
@@ -122,10 +122,10 @@ const WelcomeContent = () => {
               <div className="text-xs text-gray-600 leading-tight">Nov 2020 - Nov 2036</div>
             </div>
 
-            <div className="bg-[#6868f9]/10 border border-[#6868f9]/30 rounded-xl p-4 min-w-[140px] flex-1">
-              <div className="text-[9px] font-bold text-[#6868f9] uppercase tracking-wider mb-2">Antardasha</div>
-              <div className="font-bold text-[#6868f9] text-lg mb-2 font-serif">Mercury</div>
-              <div className="text-xs text-[#6868f9]/70 leading-tight">Jul 2025 - Oct 2027</div>
+            <div className="bg-[#C04921]/10 border border-[#C04921]/30 rounded-xl p-4 min-w-[140px] flex-1">
+              <div className="text-[9px] font-bold text-[#C04921] uppercase tracking-wider mb-2">Antardasha</div>
+              <div className="font-bold text-[#C04921] text-lg mb-2 font-serif">Mercury</div>
+              <div className="text-xs text-[#C04921]/70 leading-tight">Jul 2025 - Oct 2027</div>
             </div>
 
             <div className="bg-white border border-black/5 rounded-xl p-4 min-w-[140px] flex-1">
@@ -151,31 +151,35 @@ const WelcomeContent = () => {
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-black/5 flex flex-col justify-center">
           <div className="flex justify-between items-end mb-4">
             <h3 className="font-bold text-dark-navy">Moksha (12th) Strength</h3>
-            <span className="text-3xl font-bold text-[#6868f9]">83</span>
+            <span className="text-3xl font-bold text-[#C04921]">83</span>
           </div>
           <div className="w-full bg-black/5 rounded-full h-2 mb-2 relative overflow-hidden">
-            <div className="bg-[#6868f9] h-2 rounded-full w-[83%]"></div>
+            <div className="bg-[#C04921] h-2 rounded-full w-[83%]"></div>
           </div>
           <div className="text-xs text-gray-600 mb-4">avg 52</div>
           <p className="text-sm text-gray-600 leading-relaxed">A strong house of liberation — past-life merit supports your inner journey.</p>
         </div>
 
         {/* Premium Card */}
-        <div className="bg-[#6868f9]/5 rounded-2xl p-6 border border-[#6868f9]/20 flex flex-col justify-center relative overflow-hidden group cursor-pointer">
-          <div className="absolute top-4 right-4 bg-[#6868f9]/20 text-[#6868f9] text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-sm">Premium</div>
-          <h3 className="font-bold text-dark-navy mb-6">Spiritual Growth</h3>
-          <div className="w-full bg-black/5 rounded-full h-2 relative overflow-hidden filter blur-[2px] opacity-60">
-            <div className="bg-[#6868f9] h-2 rounded-full w-[40%]"></div>
+        <div className="bg-[#C04921]/5 rounded-2xl p-6 border border-[#C04921]/20 flex flex-col justify-center relative">
+          <div className="absolute top-4 right-4 bg-[#C04921]/20 text-[#C04921] text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-sm">Premium</div>
+          <div className="flex justify-between items-end mb-4">
+            <h3 className="font-bold text-dark-navy">Spiritual Growth</h3>
+            <span className="text-3xl font-bold text-[#C04921]">76</span>
           </div>
-          <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px] group-hover:backdrop-blur-none transition-all"></div>
+          <div className="w-full bg-black/5 rounded-full h-2 mb-2 relative overflow-hidden">
+            <div className="bg-[#C04921] h-2 rounded-full w-[76%]"></div>
+          </div>
+          <div className="text-xs text-gray-600 mb-4">avg 48</div>
+          <p className="text-sm text-gray-600 leading-relaxed">Your soul has a high capacity for spiritual awakening and transformation in this lifetime.</p>
         </div>
 
         {/* Insight Card 1 */}
         <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-black/5">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Ketu — Past-Life Karma</span>
-            <div className="bg-[#6868f9]/20 text-[#6868f9] text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full flex items-center gap-2">
-              Cancer <span className="w-1 h-1 rounded-full bg-[#6868f9]"></span> Pushya
+            <div className="bg-[#C04921]/20 text-[#C04921] text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full flex items-center gap-2">
+              Cancer <span className="w-1 h-1 rounded-full bg-[#C04921]"></span> Pushya
             </div>
           </div>
           <h3 className="text-xl font-bold font-serif text-dark-navy mb-4">What your soul already mastered</h3>
@@ -186,7 +190,7 @@ const WelcomeContent = () => {
         <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-black/5">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">12th House — Moksha & Release</span>
-            <div className="bg-[#6868f9]/20 text-[#6868f9] text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+            <div className="bg-[#C04921]/20 text-[#C04921] text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
               Capricorn
             </div>
           </div>
@@ -197,7 +201,7 @@ const WelcomeContent = () => {
       </div>
 
       {/* 5. Summary & Direction */}
-      <div className="bg-[#6868f9]/20 text-[#6868f9] text-sm md:text-base font-medium p-4 md:p-6 rounded-xl mb-6 border border-[#6868f9]/10">
+      <div className="bg-[#C04921]/20 text-[#C04921] text-sm md:text-base font-medium p-4 md:p-6 rounded-xl mb-6 border border-[#C04921]/10">
         Your dominant past-life theme: The Servant-Warrior — past struggles and service, now seeking balance.
       </div>
 
