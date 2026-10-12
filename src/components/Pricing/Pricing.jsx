@@ -2,7 +2,7 @@ import React from 'react';
 
 const Pricing = () => {
   return (
-    <div className="w-full flex justify-center mt-10 mb-8 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+    <div className="w-full flex justify-center mt-6 mb-2 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
       {/* Clean White Card */}
       <div className="bg-white rounded-[20px] p-8 md:p-10 text-center border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] w-full max-w-lg">
         

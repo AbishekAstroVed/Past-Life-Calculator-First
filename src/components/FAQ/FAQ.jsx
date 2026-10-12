@@ -42,7 +42,7 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="pt-16 pb-20 md:pt-24 md:pb-28 w-full bg-[#FAF8F2]">
+    <div className="pt-4 pb-16 md:pt-6 md:pb-20 w-full bg-[#FAF8F2]">
       <div className="max-w-[900px] mx-auto px-6 md:px-8">
 
         {/* Header Section */}

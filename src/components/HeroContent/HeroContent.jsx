@@ -16,19 +16,33 @@ const HeroContent = ({ onCtaClick }) => {
         Your Ketu, 12th house and the Rahu-Ketu axis reveal<br className="hidden lg:block" /> where your soul has been. Discover your past-life pattern<br className="hidden lg:block" /> — free, in seconds.
       </p>
 
-      {/* Checkmarks */}
-      <div className="flex flex-wrap items-center gap-4 text-[13px] md:text-sm text-gray-800 font-medium mt-1">
-        <div className="flex items-center gap-1.5">
-          <svg className="w-3.5 h-3.5 text-[#C04921]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
-          Ketu & 12th house
+      {/* Feature Highlight Pills */}
+      <div className="flex flex-wrap items-center gap-2.5 text-xs md:text-[13px] font-medium text-gray-700 mt-1">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-sm border border-black/[0.06] shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:border-[#C04921]/30 hover:shadow-[0_4px_12px_rgba(192,73,33,0.08)] hover:-translate-y-0.5 transition-all duration-200">
+          <span className="w-4 h-4 rounded-full bg-[#C04921]/10 text-[#C04921] flex items-center justify-center flex-shrink-0">
+            <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </span>
+          <span className="font-semibold text-[#1a1a1a]">Ketu & 12th house</span>
         </div>
-        <div className="flex items-center gap-1.5">
-          <svg className="w-3.5 h-3.5 text-[#C04921]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
-          Your past-life theme
+
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-sm border border-black/[0.06] shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:border-[#C04921]/30 hover:shadow-[0_4px_12px_rgba(192,73,33,0.08)] hover:-translate-y-0.5 transition-all duration-200">
+          <span className="w-4 h-4 rounded-full bg-[#C04921]/10 text-[#C04921] flex items-center justify-center flex-shrink-0">
+            <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </span>
+          <span className="font-semibold text-[#1a1a1a]">Your past-life theme</span>
         </div>
-        <div className="flex items-center gap-1.5">
-          <svg className="w-3.5 h-3.5 text-[#C04921]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path></svg>
-          Free, instant result
+
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-sm border border-[#C04921]/20 shadow-[0_2px_8px_rgba(192,73,33,0.04)] hover:border-[#C04921]/40 hover:shadow-[0_4px_12px_rgba(192,73,33,0.1)] hover:-translate-y-0.5 transition-all duration-200">
+          <span className="w-4 h-4 rounded-full bg-[#C04921] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </span>
+          <span className="font-bold text-[#C04921]">Free, instant result</span>
         </div>
       </div>
 
@@ -45,19 +59,79 @@ const HeroContent = ({ onCtaClick }) => {
         </button>
       </div>
 
-      {/* Stats Section */}
-      <div className="flex flex-row items-center gap-8 md:gap-12 mt-6">
-        <div>
-          <span className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold block mb-1">READS</span>
-          <span className="font-mono text-sm md:text-base font-bold text-[#1a1a1a]">Ketu + 12th</span>
-        </div>
-        <div>
-          <span className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold block mb-1">REVEALS</span>
-          <span className="font-mono text-sm md:text-base font-bold text-[#1a1a1a]">Past-life theme</span>
-        </div>
-        <div>
-          <span className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold block mb-1">SHOWS</span>
-          <span className="font-mono text-sm md:text-base font-bold text-[#1a1a1a]">Soul's direction</span>
+      {/* Cosmic Karmic Decoder Strip */}
+      <div className="mt-0">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 p-2 bg-gradient-to-r from-white/90 via-[#FAF8F2]/90 to-white/90 backdrop-blur-md border border-black/5 rounded-2xl shadow-[0_4px_24px_rgba(192,73,33,0.06)]">
+          {/* Card 1: READS */}
+          <div className="flex-1 flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-white border border-black/[0.04] hover:border-[#C04921]/40 hover:shadow-[0_4px_16px_rgba(192,73,33,0.1)] transition-all duration-300 group">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#C04921]/10 text-[#C04921] flex items-center justify-center flex-shrink-0 group-hover:bg-[#C04921] group-hover:text-white transition-all duration-300 group-hover:scale-105 shadow-sm">
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="4" fill="currentColor" fillOpacity="0.15" />
+                <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)" />
+              </svg>
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C04921] animate-pulse"></span>
+                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#C04921]">Reads</span>
+              </div>
+              <span className="font-serif font-bold text-sm md:text-[15px] text-[#1a1a1a] tracking-tight block truncate mt-0.5">
+                Ketu + 12th
+              </span>
+            </div>
+          </div>
+
+          {/* Flow Connector */}
+          <div className="hidden sm:flex text-[#C04921]/60 items-center justify-center flex-shrink-0">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+
+          {/* Card 2: REVEALS */}
+          <div className="flex-1 flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-white border border-black/[0.04] hover:border-[#C04921]/40 hover:shadow-[0_4px_16px_rgba(192,73,33,0.1)] transition-all duration-300 group">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#C04921]/10 text-[#C04921] flex items-center justify-center flex-shrink-0 group-hover:bg-[#C04921] group-hover:text-white transition-all duration-300 group-hover:scale-105 shadow-sm">
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z" fill="currentColor" fillOpacity="0.1" />
+                <circle cx="12" cy="12" r="3" />
+                <circle cx="12" cy="12" r="1" fill="currentColor" />
+              </svg>
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C04921]"></span>
+                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#C04921]">Reveals</span>
+              </div>
+              <span className="font-serif font-bold text-sm md:text-[15px] text-[#1a1a1a] tracking-tight block truncate mt-0.5">
+                Past-life theme
+              </span>
+            </div>
+          </div>
+
+          {/* Flow Connector */}
+          <div className="hidden sm:flex text-[#C04921]/60 items-center justify-center flex-shrink-0">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+
+          {/* Card 3: SHOWS */}
+          <div className="flex-1 flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-white border border-black/[0.04] hover:border-[#C04921]/40 hover:shadow-[0_4px_16px_rgba(192,73,33,0.1)] transition-all duration-300 group">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#C04921]/10 text-[#C04921] flex items-center justify-center flex-shrink-0 group-hover:bg-[#C04921] group-hover:text-white transition-all duration-300 group-hover:scale-105 shadow-sm">
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="12 2 14.8 9.2 22 12 14.8 14.8 12 22 9.2 14.8 2 12 9.2 9.2" fill="currentColor" fillOpacity="0.15" />
+              </svg>
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C04921]"></span>
+                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#C04921]">Shows</span>
+              </div>
+              <span className="font-serif font-bold text-sm md:text-[15px] text-[#1a1a1a] tracking-tight block truncate mt-0.5">
+                Soul's direction
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

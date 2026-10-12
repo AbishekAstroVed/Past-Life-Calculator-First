@@ -19,8 +19,9 @@ const HomePage = () => {
         <header className="mb-4 md:mb-6">
           <img src="https://cdn.astroved.com/images/images-av/AstroVed-Logo.svg" alt="AstroVed Logo" className="h-8 md:h-10 w-auto drop-shadow-lg" />
         </header>
-        <div id="main-content" className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 lg:gap-8 items-center mt-2">
-          <div className="flex flex-col justify-center">
+        <div id="main-content" className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 lg:gap-8 items-center mt-2">
+          {/* Hero text: placed second on mobile/tablet, first on desktop (laptop) */}
+          <div className="flex flex-col justify-center order-2 lg:order-1">
             <HeroContent onCtaClick={() => {
               const formSection = document.getElementById('lead-form-section');
               if (formSection) {
@@ -28,27 +29,28 @@ const HomePage = () => {
               }
             }} />
           </div>
-          <div className="relative flex justify-center lg:justify-end items-start lg:pt-0 h-full w-full">
-            <div className="relative w-full max-w-[500px] aspect-square lg:w-[110%] lg:max-w-none animate-float-slow transform translate-x-4 lg:-translate-y-12" style={{ maskImage: 'radial-gradient(circle, black 50%, transparent 80%)', WebkitMaskImage: 'radial-gradient(circle, black 50%, transparent 80%)' }}>
-               <img src="/astrology_orange_hero.jpg?v=3" alt="Mystical Astrology Journey" className="w-full h-full object-cover" />
+          {/* Image container: placed on top (order-1) on mobile & tablet, and right side (order-2) on laptop */}
+          <div className="relative flex justify-center lg:justify-end items-center h-full w-full order-1 lg:order-2">
+            <div className="relative w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[500px] aspect-square animate-float-slow" style={{ maskImage: 'radial-gradient(circle, black 55%, transparent 75%)', WebkitMaskImage: 'radial-gradient(circle, black 55%, transparent 75%)' }}>
+              <img src="/orange_human_karma_hero.jpg" alt="Vedic Past Life Karma Meditation" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
       </div>
 
       <div id="lead-form-section" className="relative z-10 max-w-[1250px] mx-auto px-6 md:px-8 w-full flex justify-center mt-10 lg:mt-16 mb-4 lg:mb-8">
-         <div className="w-full max-w-[500px] animate-fade-in-up">
-           <LeadForm onReportReady={() => {
-              setShowReport(true);
-              setTimeout(() => {
-                const reportSection = document.getElementById('report-section');
-                if (reportSection) {
-                  const y = reportSection.getBoundingClientRect().top + window.scrollY - 40;
-                  window.scrollTo({ top: y, behavior: 'smooth' });
-                }
-              }, 100);
-            }} />
-         </div>
+        <div className="w-full max-w-[500px] animate-fade-in-up">
+          <LeadForm onReportReady={() => {
+            setShowReport(true);
+            setTimeout(() => {
+              const reportSection = document.getElementById('report-section');
+              if (reportSection) {
+                const y = reportSection.getBoundingClientRect().top + window.scrollY - 40;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+              }
+            }, 100);
+          }} />
+        </div>
       </div>
 
       {showReport && (
@@ -67,7 +69,7 @@ const HomePage = () => {
             <div className="w-12 h-[2px] bg-[#C04921]"></div>
             <svg className="w-6 h-6 text-[#C04921]" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 2.5C11.5 4.5 9 7 6.5 8C9 8.5 10.5 11 12 14C13.5 11 15 8.5 17.5 8C15 7 12.5 4.5 12 2.5Z" />
-              <path d="M12 21.5C9.5 21.5 5 19 4 14C5.5 15.5 8 16 11 16C10 14 9.5 12 10.5 10.5C12.5 13 14.5 15.5 19 13.5C18 17 15 21.5 12 21.5Z" opacity="0.8"/>
+              <path d="M12 21.5C9.5 21.5 5 19 4 14C5.5 15.5 8 16 11 16C10 14 9.5 12 10.5 10.5C12.5 13 14.5 15.5 19 13.5C18 17 15 21.5 12 21.5Z" opacity="0.8" />
             </svg>
             <div className="w-12 h-[2px] bg-[#C04921]"></div>
           </div>
@@ -77,7 +79,7 @@ const HomePage = () => {
         <div className="mb-12 md:mb-20">
           <ReportDetails />
         </div>
-        <div className="flex justify-center mb-12 md:mb-20">
+        <div className="flex justify-center mb-4 md:mb-6">
           <Pricing />
         </div>
         <Benefits />

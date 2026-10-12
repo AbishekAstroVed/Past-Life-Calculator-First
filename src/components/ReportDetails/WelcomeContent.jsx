@@ -3,7 +3,7 @@ import React from 'react';
 const WelcomeContent = () => {
   return (
     <div className="w-full text-dark-navy animate-fade-in">
-      
+
       {/* 1. Document Header */}
       <div className="flex items-start gap-4 mb-10">
         <div className="w-12 h-12 rounded-xl bg-[#C04921]/20 border border-[#C04921]/30 flex items-center justify-center flex-shrink-0 mt-1">
@@ -21,14 +21,14 @@ const WelcomeContent = () => {
       <div className="bg-gradient-to-br from-white to-[#FAF8F2] border border-gray-100 rounded-[24px] p-8 md:p-12 text-center flex flex-col items-center justify-center shadow-[0_15px_40px_rgba(192,73,33,0.05)] relative overflow-hidden mb-12">
         <div className="absolute -top-20 -right-20 w-40 h-40 bg-white rounded-full blur-3xl"></div>
         <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-white rounded-full blur-3xl"></div>
-        
+
         <h2 className="text-2xl md:text-3xl font-serif font-bold text-dark-navy mb-4 relative z-10">
           This Is Just a Glimpse. <span className="text-[#C04921]">See Your Whole Karmic Story.</span>
         </h2>
         <p className="text-gray-600 max-w-2xl text-sm md:text-base leading-relaxed mb-8 relative z-10">
           Your free result reveals the theme. The full Past Life Report decodes your karmic debts, the relationships carried over, why patterns repeat, and the remedies to clear them.
         </p>
-        
+
         <button className="relative overflow-hidden bg-[#C04921] text-white border-none rounded-xl px-8 py-4 text-base md:text-lg font-bold cursor-pointer transition-all hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(192,73,33,0.25)] z-10 group hover:bg-[#a63d1a]">
           <span className="relative z-10 flex items-center justify-center gap-2 drop-shadow-sm">
             Get My Past Life Report
@@ -41,49 +41,49 @@ const WelcomeContent = () => {
       <div className="bg-white rounded-[24px] p-8 shadow-sm border border-black/5 mb-8 relative">
         <h2 className="text-xl font-bold mb-1 text-dark-navy">Your birth chart</h2>
         <p className="text-gray-600 text-sm mb-10">Highlighted houses & planets are what this reading focuses on.</p>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          
+
           {/* North Indian Chart Mockup */}
           <div className="flex flex-col items-center">
             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4">North</span>
             <div className="w-full max-w-[280px] aspect-square relative border border-black/10 overflow-hidden text-xs">
-               {/* Grid Lines */}
-               <svg className="absolute inset-0 w-full h-full text-dark-navy/20" stroke="currentColor" strokeWidth="1">
-                 <line x1="0" y1="0" x2="100%" y2="100%" />
-                 <line x1="100%" y1="0" x2="0" y2="100%" />
-                 <line x1="50%" y1="0" x2="100%" y2="50%" />
-                 <line x1="100%" y1="50%" x2="50%" y2="100%" />
-                 <line x1="50%" y1="100%" x2="0" y2="50%" />
-                 <line x1="0" y1="50%" x2="50%" y2="0" />
-               </svg>
-               {/* Highlight Triangle */}
-               <svg className="absolute inset-0 w-full h-full text-[#C04921]/10 fill-current" viewBox="0 0 100 100" preserveAspectRatio="none">
-                 <polygon points="50,0 100,0 50,50" />
-               </svg>
-               <svg className="absolute inset-0 w-full h-full text-[#C04921]" stroke="currentColor" strokeWidth="2" viewBox="0 0 100 100" preserveAspectRatio="none">
-                 <polygon points="50,0 100,0 50,50" fill="none" />
-               </svg>
-               
-               {/* Data Points */}
-               <div className="absolute top-2 left-1/4 text-gray-600">12</div>
-               <div className="absolute top-1/4 left-2 text-gray-600">1</div>
-               <div className="absolute top-1/2 left-8 text-gray-600">2</div>
-               <div className="absolute bottom-1/4 left-2 text-gray-600">3</div>
-               <div className="absolute bottom-2 left-1/4 text-gray-600">4</div>
-               <div className="absolute bottom-2 right-1/4 text-gray-600">6</div>
-               <div className="absolute bottom-1/4 right-2 text-gray-600">7</div>
-               <div className="absolute top-1/2 right-8 text-gray-600">8</div>
-               <div className="absolute top-1/4 right-2 text-gray-600">9</div>
-               <div className="absolute top-2 right-1/4 text-[#C04921] font-bold">10</div>
-               <div className="absolute top-8 right-[30%] text-gray-600">11</div>
+              {/* Grid Lines */}
+              <svg className="absolute inset-0 w-full h-full text-dark-navy/20" stroke="currentColor" strokeWidth="1">
+                <line x1="0" y1="0" x2="100%" y2="100%" />
+                <line x1="100%" y1="0" x2="0" y2="100%" />
+                <line x1="50%" y1="0" x2="100%" y2="50%" />
+                <line x1="100%" y1="50%" x2="50%" y2="100%" />
+                <line x1="50%" y1="100%" x2="0" y2="50%" />
+                <line x1="0" y1="50%" x2="50%" y2="0" />
+              </svg>
+              {/* Highlight Triangle */}
+              <svg className="absolute inset-0 w-full h-full text-[#C04921]/10 fill-current" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <polygon points="50,0 100,0 50,50" />
+              </svg>
+              <svg className="absolute inset-0 w-full h-full text-[#C04921]" stroke="currentColor" strokeWidth="2" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <polygon points="50,0 100,0 50,50" fill="none" />
+              </svg>
 
-               <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-gray-200">Mo</div>
-               <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 font-bold text-gray-200">Me Ve</div>
-               <div className="absolute top-8 right-8 font-bold text-[#C04921]">Ju<sup className="font-normal text-[8px]">R</sup> Ra<sup className="font-normal text-[8px]">R</sup></div>
-               <div className="absolute bottom-[35%] left-8 font-bold text-gray-200">Ma</div>
-               <div className="absolute bottom-8 left-1/4 font-bold text-[#C04921]/70">Ke</div>
-               <div className="absolute bottom-[20%] right-1/4 font-bold text-gray-200">Su <span className="text-[#C04921]">Sa</span></div>
+              {/* Data Points */}
+              <div className="absolute top-2 left-1/4 text-gray-600">12</div>
+              <div className="absolute top-1/4 left-2 text-gray-600">1</div>
+              <div className="absolute top-1/2 left-8 text-gray-600">2</div>
+              <div className="absolute bottom-1/4 left-2 text-gray-600">3</div>
+              <div className="absolute bottom-2 left-1/4 text-gray-600">4</div>
+              <div className="absolute bottom-2 right-1/4 text-gray-600">6</div>
+              <div className="absolute bottom-1/4 right-2 text-gray-600">7</div>
+              <div className="absolute top-1/2 right-8 text-gray-600">8</div>
+              <div className="absolute top-1/4 right-2 text-gray-600">9</div>
+              <div className="absolute top-2 right-1/4 text-[#C04921] font-bold">10</div>
+              <div className="absolute top-8 right-[30%] text-gray-600">11</div>
+
+              <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-gray-200">Mo</div>
+              <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 font-bold text-gray-200">Me Ve</div>
+              <div className="absolute top-8 right-8 font-bold text-[#C04921]">Ju<sup className="font-normal text-[8px]">R</sup> Ra<sup className="font-normal text-[8px]">R</sup></div>
+              <div className="absolute bottom-[35%] left-8 font-bold text-gray-200">Ma</div>
+              <div className="absolute bottom-8 left-1/4 font-bold text-[#C04921]/70">Ke</div>
+              <div className="absolute bottom-[20%] right-1/4 font-bold text-gray-200">Su <span className="text-[#C04921]">Sa</span></div>
             </div>
           </div>
 
@@ -95,14 +95,14 @@ const WelcomeContent = () => {
               <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">3</div><div className="text-[8px] text-gray-600">ARIES</div></div>
               <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">4</div><div className="text-[8px] text-gray-600">TAURUS</div></div>
               <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">5</div><div className="text-[8px] text-gray-600">GEMINI</div><div className="absolute bottom-1 left-1 font-bold text-xs text-gray-600">Ma</div></div>
-              
+
               <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">1</div><div className="text-[8px] text-gray-600">AQUARIUS</div><div className="absolute bottom-1 left-1 font-bold text-xs text-gray-600">Mo</div></div>
               <div className="col-span-2 row-span-2 flex items-center justify-center text-gray-600 font-serif text-lg">D1</div>
               <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">6</div><div className="text-[8px] text-gray-600">CANCER</div><div className="absolute bottom-1 left-1 font-bold text-xs text-[#C04921]/70">Ke</div></div>
-              
+
               <div className="border border-black/5 p-1 bg-[#C04921]/10 border-[#C04921] relative"><div className="font-bold text-[#C04921]">12</div><div className="text-[8px] text-[#C04921]/70">CAPRICORN</div><div className="absolute bottom-1 left-1 font-bold text-xs text-[#C04921]">Ju<sup className="font-normal text-[8px]">R</sup> Ra<sup className="font-normal text-[8px]">R</sup></div></div>
               <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">7</div><div className="text-[8px] text-gray-600">LEO</div><div className="absolute bottom-1 left-1 font-bold text-xs text-gray-600">Me Ve</div></div>
-              
+
               <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">11</div><div className="text-[8px] text-gray-600">SAGITTARIUS</div></div>
               <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">10</div><div className="text-[8px] text-gray-600">SCORPIO</div></div>
               <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">9</div><div className="text-[8px] text-gray-600">LIBRA</div></div>
@@ -115,7 +115,7 @@ const WelcomeContent = () => {
         <div className="mt-12">
           <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4">Your Current Planetary Period · Vimshottari Dasha</div>
           <div className="flex flex-wrap gap-4">
-            
+
             <div className="bg-white border border-black/5 rounded-xl p-4 min-w-[140px] flex-1">
               <div className="text-[9px] font-bold text-gray-600 uppercase tracking-wider mb-2">Mahadasha</div>
               <div className="font-bold text-dark-navy text-lg mb-2 font-serif">Jupiter</div>
@@ -146,7 +146,7 @@ const WelcomeContent = () => {
 
       {/* 4. Metrics & Insights Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        
+
         {/* Strength Card */}
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-black/5 flex flex-col justify-center">
           <div className="flex justify-between items-end mb-4">
@@ -161,8 +161,7 @@ const WelcomeContent = () => {
         </div>
 
         {/* Premium Card */}
-        <div className="bg-[#C04921]/5 rounded-2xl p-6 border border-[#C04921]/20 flex flex-col justify-center relative">
-          <div className="absolute top-4 right-4 bg-[#C04921]/20 text-[#C04921] text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-sm">Premium</div>
+        <div className="bg-white rounded-2xl p-6 border border-[#C04921]/20 flex flex-col justify-center relative">
           <div className="flex justify-between items-end mb-4">
             <h3 className="font-bold text-dark-navy">Spiritual Growth</h3>
             <span className="text-3xl font-bold text-[#C04921]">76</span>

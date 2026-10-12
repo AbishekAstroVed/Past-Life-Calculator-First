@@ -24,43 +24,150 @@ const Features = () => {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
 
-          {/* Card 1 */}
-          <div className="group bg-white rounded-3xl border border-black/5 p-8 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(192,73,33,0.12)] flex flex-col items-start text-left transition-all duration-500 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-            <div className="w-16 h-16 rounded-2xl bg-[#C04921]/10 flex items-center justify-center text-[#C04921] mb-6 group-hover:scale-110 group-hover:bg-[#C04921] group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-md">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+          {/* Card 1: Read by real astrologers */}
+          <div 
+            className="group relative bg-gradient-to-b from-white via-white to-[#FAF8F2]/60 rounded-3xl border border-black/[0.06] hover:border-[#C04921]/30 p-8 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(192,73,33,0.12)] hover:-translate-y-2 flex flex-col justify-between transition-all duration-500 overflow-hidden"
+          >
+            {/* Ambient Watermark Glyph in Background */}
+            <div className="absolute -right-8 -bottom-8 w-36 h-36 rounded-full bg-[#C04921]/[0.03] group-hover:bg-[#C04921]/[0.08] transition-all duration-700 pointer-events-none flex items-center justify-center">
+              <svg className="w-24 h-24 text-[#C04921]/15 group-hover:scale-110 group-hover:rotate-12 transition-all duration-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                <circle cx="12" cy="12" r="10" strokeDasharray="2 3" />
+                <circle cx="12" cy="12" r="5" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold font-serif text-dark-navy mb-3">Read by real astrologers</h3>
-            <div className="w-10 group-hover:w-20 transition-all duration-500 h-[2px] bg-[#C04921] mb-4"></div>
-            <p className="text-sm text-gray-500 font-medium leading-relaxed">Your report is interpreted by expert Vedic astrologers, not auto-generated text.</p>
+
+            <div>
+              {/* Top Row: Icon + Category Badge */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#C04921]/15 to-[#C04921]/5 border border-[#C04921]/20 text-[#C04921] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#C04921] group-hover:text-white transition-all duration-500 shadow-sm">
+                  {/* Astrologer / Guru Wisdom Icon */}
+                  <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="8" r="4" fill="currentColor" fillOpacity="0.15" />
+                    <path d="M6 21v-2a6 6 0 0 1 12 0v2" />
+                    <path d="M12 2v2m0 8v2M8 4l1.5 1.5M16 4l-1.5 1.5" />
+                    <circle cx="12" cy="8" r="1.5" fill="currentColor" />
+                  </svg>
+                </div>
+                <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#C04921] bg-[#C04921]/10 px-2.5 py-1 rounded-full">
+                  100% Human
+                </span>
+              </div>
+
+              {/* Title & Underline */}
+              <h3 className="text-xl md:text-[22px] font-bold font-serif text-dark-navy mb-3 group-hover:text-[#C04921] transition-colors duration-300">
+                Read by real astrologers
+              </h3>
+              <div className="w-8 group-hover:w-16 transition-all duration-500 h-[2px] bg-[#C04921] rounded-full mb-4"></div>
+
+              {/* Description */}
+              <p className="text-sm text-gray-600 leading-relaxed font-sans">
+                Your report is meticulously interpreted by expert Vedic astrologers, not auto-generated text or generic templates.
+              </p>
+            </div>
+
+            {/* Bottom Benefit Pill */}
+            <div className="mt-6 pt-4 border-t border-black/[0.04] flex items-center gap-2 text-xs font-semibold text-gray-500 group-hover:text-[#C04921] transition-colors">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C04921]"></span>
+              <span>Hand-prepared with care</span>
+            </div>
           </div>
 
-          {/* Card 2 */}
-          <div className="group bg-white rounded-3xl border border-black/5 p-8 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(192,73,33,0.12)] flex flex-col items-start text-left transition-all duration-500 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-            <div className="w-16 h-16 rounded-2xl bg-[#C04921]/10 flex items-center justify-center text-[#C04921] mb-6 group-hover:scale-110 group-hover:bg-[#C04921] group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-md">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          {/* Card 2: Classical Vedic method */}
+          <div 
+            className="group relative bg-gradient-to-b from-white via-white to-[#FAF8F2]/60 rounded-3xl border border-black/[0.06] hover:border-[#C04921]/30 p-8 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(192,73,33,0.12)] hover:-translate-y-2 flex flex-col justify-between transition-all duration-500 overflow-hidden"
+          >
+            {/* Ambient Watermark Glyph in Background */}
+            <div className="absolute -right-8 -bottom-8 w-36 h-36 rounded-full bg-[#C04921]/[0.03] group-hover:bg-[#C04921]/[0.08] transition-all duration-700 pointer-events-none flex items-center justify-center">
+              <svg className="w-24 h-24 text-[#C04921]/15 group-hover:scale-110 group-hover:rotate-12 transition-all duration-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                <polygon points="12 2 22 12 12 22 2 12" />
+                <rect x="6" y="6" width="12" height="12" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold font-serif text-dark-navy mb-3">Classical Vedic method</h3>
-            <div className="w-10 group-hover:w-20 transition-all duration-500 h-[2px] bg-[#C04921] mb-4"></div>
-            <p className="text-sm text-gray-500 font-medium leading-relaxed">Grounded in Ketu, the 12th house, Atmakaraka and the Rahu-Ketu axis.</p>
+
+            <div>
+              {/* Top Row: Icon + Category Badge */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#C04921]/15 to-[#C04921]/5 border border-[#C04921]/20 text-[#C04921] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#C04921] group-hover:text-white transition-all duration-500 shadow-sm">
+                  {/* Authentic Vedic Birth Chart (Kundali) Mandala */}
+                  <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" fill="currentColor" fillOpacity="0.1" />
+                    <line x1="3" y1="3" x2="21" y2="21" />
+                    <line x1="21" y1="3" x2="3" y2="21" />
+                    <polygon points="12 3 21 12 12 21 3 12" fill="currentColor" fillOpacity="0.12" />
+                    <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                  </svg>
+                </div>
+                <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#C04921] bg-[#C04921]/10 px-2.5 py-1 rounded-full">
+                  Ancient Parashara
+                </span>
+              </div>
+
+              {/* Title & Underline */}
+              <h3 className="text-xl md:text-[22px] font-bold font-serif text-dark-navy mb-3 group-hover:text-[#C04921] transition-colors duration-300">
+                Classical Vedic method
+              </h3>
+              <div className="w-8 group-hover:w-16 transition-all duration-500 h-[2px] bg-[#C04921] rounded-full mb-4"></div>
+
+              {/* Description */}
+              <p className="text-sm text-gray-600 leading-relaxed font-sans">
+                Rooted strictly in sacred scriptures: Ketu's karmic placement, the 12th house of liberation, Atmakaraka, and the Rahu-Ketu soul axis.
+              </p>
+            </div>
+
+            {/* Bottom Benefit Pill */}
+            <div className="mt-6 pt-4 border-t border-black/[0.04] flex items-center gap-2 text-xs font-semibold text-gray-500 group-hover:text-[#C04921] transition-colors">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C04921]"></span>
+              <span>Authentic Vedic Jyotish</span>
+            </div>
           </div>
 
-          {/* Card 3 */}
-          <div className="group bg-white rounded-3xl border border-black/5 p-8 shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(192,73,33,0.12)] flex flex-col items-start text-left transition-all duration-500 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
-            <div className="w-16 h-16 rounded-2xl bg-[#C04921]/10 flex items-center justify-center text-[#C04921] mb-6 group-hover:scale-110 group-hover:bg-[#C04921] group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-md">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4"></path>
+          {/* Card 3: Private & secure */}
+          <div 
+            className="group relative bg-gradient-to-b from-white via-white to-[#FAF8F2]/60 rounded-3xl border border-black/[0.06] hover:border-[#C04921]/30 p-8 shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(192,73,33,0.12)] hover:-translate-y-2 flex flex-col justify-between transition-all duration-500 overflow-hidden"
+          >
+            {/* Ambient Watermark Glyph in Background */}
+            <div className="absolute -right-8 -bottom-8 w-36 h-36 rounded-full bg-[#C04921]/[0.03] group-hover:bg-[#C04921]/[0.08] transition-all duration-700 pointer-events-none flex items-center justify-center">
+              <svg className="w-24 h-24 text-[#C04921]/15 group-hover:scale-110 group-hover:rotate-12 transition-all duration-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold font-serif text-dark-navy mb-3">Private <span className="font-sans">&</span> secure</h3>
-            <div className="w-10 group-hover:w-20 transition-all duration-500 h-[2px] bg-[#C04921] mb-4"></div>
-            <p className="text-sm text-gray-500 font-medium leading-relaxed">Your birth details are used only for your reading and never shared.</p>
+
+            <div>
+              {/* Top Row: Icon + Category Badge */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#C04921]/15 to-[#C04921]/5 border border-[#C04921]/20 text-[#C04921] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#C04921] group-hover:text-white transition-all duration-500 shadow-sm">
+                  {/* Secure Shield Lock Icon */}
+                  <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" fill="currentColor" fillOpacity="0.1" />
+                    <rect x="9" y="11" width="6" height="5" rx="1.5" />
+                    <path d="M10 11V9a2 2 0 1 1 4 0v2" />
+                    <circle cx="12" cy="13.5" r="0.75" fill="currentColor" />
+                  </svg>
+                </div>
+                <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#C04921] bg-[#C04921]/10 px-2.5 py-1 rounded-full">
+                  256-Bit Encrypted
+                </span>
+              </div>
+
+              {/* Title & Underline */}
+              <h3 className="text-xl md:text-[22px] font-bold font-serif text-dark-navy mb-3 group-hover:text-[#C04921] transition-colors duration-300">
+                Private <span className="font-sans font-medium">&</span> secure
+              </h3>
+              <div className="w-8 group-hover:w-16 transition-all duration-500 h-[2px] bg-[#C04921] rounded-full mb-4"></div>
+
+              {/* Description */}
+              <p className="text-sm text-gray-600 leading-relaxed font-sans">
+                Your birth details and personal questions are used strictly for your sacred calculation and are never shared or sold.
+              </p>
+            </div>
+
+            {/* Bottom Benefit Pill */}
+            <div className="mt-6 pt-4 border-t border-black/[0.04] flex items-center gap-2 text-xs font-semibold text-gray-500 group-hover:text-[#C04921] transition-colors">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C04921]"></span>
+              <span>100% Confidential Guarantee</span>
+            </div>
           </div>
 
         </div>
