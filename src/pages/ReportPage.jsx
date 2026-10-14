@@ -104,8 +104,8 @@ const ReportPage = ({ embedded = false }) => {
             <WelcomeContent />
           ) : (
             <div className="prose max-w-none text-[#1a1a1a]">
-              <h1 className="text-3xl md:text-5xl font-serif text-center mb-8">{sections[activeSection - 1]}</h1>
-              <p className="text-lg text-gray-600 text-center max-w-2xl mx-auto">
+              <h1 className="text-xl md:text-2xl font-serif text-center mb-4">{sections[activeSection - 1]}</h1>
+              <p className="text-xs sm:text-sm text-gray-600 text-center max-w-xl mx-auto">
                 Your detailed past life karma reading for this chapter will be displayed here. The report dynamically updates based on the sidebar selection.
               </p>
             </div>

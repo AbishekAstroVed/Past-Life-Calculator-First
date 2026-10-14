@@ -4,7 +4,7 @@ const FAQItem = ({ question, answer, isLast }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={`py-6 px-6 md:px-8 ${!isLast ? 'border-b border-gray-100' : ''}`}>
+    <div className={`py-6 px-6 md:px-8 ${!isLast ? 'border-b border-[#C04921]/10' : ''}`}>
       <button
         className="w-full flex items-center justify-between text-left focus:outline-none group"
         onClick={() => setIsOpen(!isOpen)}
@@ -42,18 +42,25 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="pt-4 pb-16 md:pt-6 md:pb-20 w-full bg-[#FAF8F2]">
-      <div className="max-w-[900px] mx-auto px-6 md:px-8">
+    <div className="relative pt-8 pb-20 md:pt-12 md:pb-24 w-full bg-transparent overflow-hidden">
+      {/* Ambient Spiritual Aura for FAQ */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[75vw] max-w-[850px] h-[380px] bg-gradient-to-r from-[#D97706]/10 via-[#C04921]/12 to-transparent rounded-full blur-[110px] pointer-events-none animate-pulse-slow"></div>
+
+      <div className="relative z-10 max-w-[900px] mx-auto px-6 md:px-8">
 
         {/* Header Section */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-[40px] font-serif font-bold text-[#1a1a1a]">
+          <div className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.2em] text-[#C04921] uppercase mb-3">
+            <span className="text-[#C04921] text-xs">✦</span>
+            Clarifications
+          </div>
+          <h2 className="text-2xl sm:text-3xl md:text-[2.15rem] font-serif font-bold text-[#1a1a1a]">
             Past Life Calculator — FAQs
           </h2>
         </div>
 
-        {/* FAQ Container */}
-        <div className="bg-white border border-gray-100 rounded-[20px] shadow-sm">
+        {/* FAQ Container with Glassmorphism */}
+        <div className="bg-white/85 backdrop-blur-md border border-[#C04921]/15 rounded-[24px] shadow-[0_8px_32px_rgba(192,73,33,0.06)] overflow-hidden">
           {faqs.map((faq, index) => (
             <FAQItem
               key={index}

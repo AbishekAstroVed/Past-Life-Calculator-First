@@ -15,7 +15,7 @@ const Features = () => {
             </svg>
             <div className="w-12 h-[2px] bg-[#C04921]"></div>
           </div>
-          <h2 className="text-4xl md:text-5xl text-dark-navy font-bold font-serif mb-4 drop-shadow-sm">
+          <h2 className="text-2xl sm:text-3xl md:text-[2.15rem] text-dark-navy font-bold font-serif mb-3 drop-shadow-sm">
             Why <span className="text-[#C04921]">AstroVed</span>
           </h2>
           <p className="text-gray-500 font-medium text-sm md:text-base max-w-xl mx-auto">

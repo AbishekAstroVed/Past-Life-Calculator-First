@@ -1,53 +1,320 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const WelcomeContent = () => {
+const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDirection }) => {
+  const [internalReport, setInternalReport] = useState(() => {
+    if (propReportData) return propReportData;
+    try {
+      const stored = localStorage.getItem('past_life_report');
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [isLoading, setIsLoading] = useState(!propReportData && !internalReport);
+
+  // Sync prop changes whenever user submits form
+  useEffect(() => {
+    if (propReportData) {
+      setInternalReport(propReportData);
+      setIsLoading(false);
+    }
+  }, [propReportData]);
+
+  // If no report in prop or state, check localStorage using the user's actual submitted details
+  useEffect(() => {
+    if (!internalReport && !propReportData) {
+      let active = true;
+
+      let savedDetails = null;
+      try {
+        const storedDetails = localStorage.getItem('past_life_user_details');
+        if (storedDetails) savedDetails = JSON.parse(storedDetails);
+      } catch (_) { }
+
+      // Only auto-fetch if real user details exist in localStorage from lead form
+      if (!savedDetails) {
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(true);
+      const apiUrl = import.meta.env.VITE_BACKEND_URL || 'https://sprint-common-nutlike.ngrok-free.dev/past-life/report';
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
+        },
+        body: JSON.stringify(savedDetails)
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (active && data) {
+            setInternalReport(data);
+            try {
+              localStorage.setItem('past_life_report', JSON.stringify(data));
+            } catch (_) { }
+          }
+        })
+        .catch(err => {
+          console.warn('Real-time report auto-fetch error:', err);
+        })
+        .finally(() => {
+          if (active) setIsLoading(false);
+        });
+
+      return () => { active = false; };
+    }
+  }, [internalReport, propReportData]);
+
+  const activeReport = propReportData || internalReport;
+
+  // Real-time API fields strictly from activeReport
+  const soulDirection = activeReport?.soul_direction || propSoulDirection || null;
+  const soulMastery = activeReport?.soul_mastery || null;
+  const fifthHouse = activeReport?.fifth_house || null;
+
+  // Real-time API fields strictly from activeReport (No hardcoded fallback data)
+  const spiritualGrowth = activeReport?.spiritual_growth || null;
+
+  // Real-time Karma fields strictly from activeReport
+  const karma = activeReport?.karma || null;
+  const karmaContent = karma?.content || (typeof karma === 'string' ? karma : null);
+  const karmaTitle = karma?.title || "Past-Life Karma";
+
+  const fifthLord = activeReport?.karma?.fifth_lord || null;
+  const planetsInFifth = activeReport?.karma?.planets_in_fifth || [];
+  const primaryKarma = activeReport?.karma?.primary_karma || [];
+  const planetInFifth = planetsInFifth[0] || null;
+  const primaryKarmaItem = primaryKarma[0] || null;
+
+  const currentDasha = activeReport?.dasha?.current_dasha || null;
+  const mahadasha = currentDasha?.mahadasha || null;
+  const antardasha = currentDasha?.antardasha || null;
+  const pratyantar = currentDasha?.pratyantar || null;
+  const nextAntardasha = currentDasha?.next_antardasha || null;
+
+  const dominantTheme =
+    "Your dominant past-life theme: The Provider — past-life focus on wealth and family, now refining values.";
+
+  // Helper mappings for charts
+  const planetAbbr = {
+    Sun: 'Su', Moon: 'Mo', Mars: 'Ma', Mercury: 'Me',
+    Jupiter: 'Ju', Venus: 'Ve', Saturn: 'Sa', Rahu: 'Ra', Ketu: 'Ke'
+  };
+
+  const ascSignNum = activeReport?.chart?.ascendant?.sign_number;
+
+  // Get planets in a given house number
+  const getHouseInfo = (houseNum) => {
+    const houseData = activeReport?.chart?.houses?.[String(houseNum)];
+    if (houseData) {
+      const planetList = (houseData.planets || []).map(p => planetAbbr[p] || p.slice(0, 2));
+      return {
+        signNum: houseData.sign_number,
+        planets: planetList.join(' '),
+        planetList
+      };
+    }
+    const computedSignNum = ascSignNum ? (((ascSignNum - 1 + houseNum - 1) % 12) + 1) : '';
+    return { signNum: computedSignNum, planets: '', planetList: [] };
+  };
+
+  const renderPlanets = (houseInfo, highlightColor = false) => {
+    const list = houseInfo.planetList || (houseInfo.planets ? houseInfo.planets.split(' ').filter(Boolean) : []);
+    if (!list.length) {
+      return null;
+    }
+    if (list.length > 2) {
+      const chunks = [];
+      for (let i = 0; i < list.length; i += 2) {
+        chunks.push(list.slice(i, i + 2).join(' '));
+      }
+      return (
+        <span className={`inline-flex flex-col items-center leading-tight ${highlightColor ? 'text-[#C04921]' : 'text-gray-600'}`}>
+          {chunks.map((chunk, idx) => (
+            <span key={idx}>{chunk}</span>
+          ))}
+        </span>
+      );
+    }
+    return (
+      <span className={highlightColor ? 'text-[#C04921]' : 'text-gray-600'}>
+        {list.join(' ')}
+      </span>
+    );
+  };
+
+  // South Indian signs in traditional order
+  const southSigns = [
+    { name: 'PISCES', signNum: 12 },
+    { name: 'ARIES', signNum: 1 },
+    { name: 'TAURUS', signNum: 2 },
+    { name: 'GEMINI', signNum: 3 },
+    { name: 'AQUARIUS', signNum: 11 },
+    { name: 'CANCER', signNum: 4 },
+    { name: 'CAPRICORN', signNum: 10 },
+    { name: 'LEO', signNum: 5 },
+    { name: 'SAGITTARIUS', signNum: 9 },
+    { name: 'SCORPIO', signNum: 8 },
+    { name: 'LIBRA', signNum: 7 },
+    { name: 'VIRGO', signNum: 6 }
+  ];
+
+  const getSignPlanets = (signNum) => {
+    const planetsInSign = [];
+    if (activeReport?.chart?.planets) {
+      Object.entries(activeReport.chart.planets).forEach(([pName, pData]) => {
+        if (pData.sign_number === signNum) {
+          planetsInSign.push(planetAbbr[pName] || pName.slice(0, 2));
+        }
+      });
+    }
+    return planetsInSign.join(' ');
+  };
+
+  const getHouseFromSign = (signNum) => {
+    if (!ascSignNum) return '';
+    return ((signNum - ascSignNum + 12) % 12) + 1;
+  };
+
+  const renderSouthBox = (s) => {
+    const h = getHouseFromSign(s.signNum);
+    const isKarma = h === 5;
+    const isAsc = h === 1;
+    const p = getSignPlanets(s.signNum);
+    return (
+      <div
+        key={s.name}
+        style={isKarma ? { outline: '2px solid #C04921', outlineOffset: '-2px' } : {}}
+        className={`border border-black/5 p-1 relative flex flex-col justify-between ${isKarma ? 'bg-[#C04921]/15 z-10' : isAsc ? 'bg-[#C04921]/5' : ''
+          }`}
+      >
+        <div>
+          <div className="flex items-center justify-between leading-none mb-0.5">
+            <span className={`font-bold ${isKarma ? 'text-[#C04921]' : isAsc ? 'text-[#C04921]' : 'text-dark-navy'}`}>
+              {h}
+            </span>
+            {isAsc && (
+              <span className="text-[6.5px] font-extrabold text-[#C04921] uppercase tracking-wider bg-[#C04921]/15 px-1 py-0.5 rounded leading-none">
+                ASC
+              </span>
+            )}
+          </div>
+          <div className="text-[7px] text-gray-500 leading-tight">{s.name}</div>
+        </div>
+        {p && (
+          <div className={`font-bold text-[9.5px] leading-tight ${isKarma ? 'text-[#C04921]' : 'text-gray-700'}`}>
+            {p}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  if (isLoading) {
+    return (
+      <div className="w-full py-16 flex flex-col items-center justify-center text-center">
+        <div className="w-10 h-10 border-3 border-[#C04921] border-t-transparent rounded-full animate-spin mb-4"></div>
+        <h3 className="text-base font-serif font-bold text-dark-navy">Generating Real-Time Vedic Past Life Reading...</h3>
+        <p className="text-xs text-gray-500 mt-1">Connecting directly to planetary calculation engine</p>
+      </div>
+    );
+  }
+
+  if (!activeReport) {
+    return (
+      <div className="w-full py-12 flex flex-col items-center justify-center text-center bg-white rounded-2xl border border-black/5 p-6 sm:p-8 shadow-sm">
+        <div className="w-12 h-12 rounded-full bg-[#C04921]/10 flex items-center justify-center text-[#C04921] mb-3">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h2 className="text-lg sm:text-xl font-serif font-bold text-dark-navy mb-2">No Birth Details Found</h2>
+        <p className="text-xs sm:text-sm text-gray-600 max-w-md mb-5 leading-relaxed">
+          Please submit your birth date, time, and location in the form above to generate your live Vedic past life karma and chart reading.
+        </p>
+        <button
+          onClick={() => {
+            const formSection = document.getElementById('lead-form-section');
+            if (formSection) {
+              formSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }}
+          className="bg-[#C04921] hover:bg-[#a63d1a] text-white px-5 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all shadow-md inline-flex items-center gap-2 cursor-pointer"
+        >
+          Enter Birth Details
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full text-dark-navy animate-fade-in">
+    <div className="w-full text-dark-navy animate-fade-in relative">
 
       {/* 1. Document Header */}
-      <div className="flex items-start gap-4 mb-10">
-        <div className="w-12 h-12 rounded-xl bg-[#C04921]/20 border border-[#C04921]/30 flex items-center justify-center flex-shrink-0 mt-1">
-          <svg className="w-6 h-6 text-[#C04921]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+      <div className="flex items-start gap-3.5 mb-6">
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-[#C04921]/15 border border-[#C04921]/25 flex items-center justify-center flex-shrink-0 mt-0.5">
+          <svg className="w-4 h-4 sm:w-5 sm:h-5 text-[#C04921]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
         </div>
         <div>
-          <div className="text-[11px] font-bold text-gray-600 uppercase tracking-widest mb-2">Past Life · Ketu & 12th House</div>
-          <h1 className="text-3xl md:text-4xl font-serif font-bold text-dark-navy m-0 leading-tight">Here's the Karma You Carried Into This Life</h1>
+          {(activeReport?.soul_direction?.label || activeReport?.soul_mastery?.label || activeReport?.fifth_house?.label) && (
+            <div className="text-[9.5px] sm:text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">
+              {activeReport?.soul_direction?.label || activeReport?.soul_mastery?.label || activeReport?.fifth_house?.label}
+            </div>
+          )}
+          <h1 className="text-xl sm:text-2xl md:text-[24px] font-serif font-bold text-dark-navy m-0 leading-snug">
+            Here's the Karma You Carried Into This Life
+          </h1>
         </div>
       </div>
 
-      <div className="w-full h-px bg-black/5 mb-8"></div>
+      <div className="w-full h-px bg-black/5 mb-6"></div>
 
-      {/* CTA Block (Moved to Top) */}
-      <div className="bg-gradient-to-br from-white to-[#FAF8F2] border border-gray-100 rounded-[24px] p-8 md:p-12 text-center flex flex-col items-center justify-center shadow-[0_15px_40px_rgba(192,73,33,0.05)] relative overflow-hidden mb-12">
+      {/* CTA Block */}
+      <div className="bg-gradient-to-br from-white to-[#FAF8F2] border border-gray-100 rounded-2xl p-5 sm:p-7 md:p-8 text-center flex flex-col items-center justify-center shadow-[0_8px_30px_rgba(192,73,33,0.04)] relative overflow-hidden mb-8">
         <div className="absolute -top-20 -right-20 w-40 h-40 bg-white rounded-full blur-3xl"></div>
         <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-white rounded-full blur-3xl"></div>
 
-        <h2 className="text-2xl md:text-3xl font-serif font-bold text-dark-navy mb-4 relative z-10">
+        <h2 className="text-base sm:text-lg md:text-xl font-serif font-bold text-dark-navy mb-2 relative z-10">
           This Is Just a Glimpse. <span className="text-[#C04921]">See Your Whole Karmic Story.</span>
         </h2>
-        <p className="text-gray-600 max-w-2xl text-sm md:text-base leading-relaxed mb-8 relative z-10">
+        <p className="text-gray-600 max-w-xl text-xs sm:text-[13px] leading-relaxed mb-5 relative z-10">
           Your free result reveals the theme. The full Past Life Report decodes your karmic debts, the relationships carried over, why patterns repeat, and the remedies to clear them.
         </p>
 
-        <button className="relative overflow-hidden bg-[#C04921] text-white border-none rounded-xl px-8 py-4 text-base md:text-lg font-bold cursor-pointer transition-all hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(192,73,33,0.25)] z-10 group hover:bg-[#a63d1a]">
-          <span className="relative z-10 flex items-center justify-center gap-2 drop-shadow-sm">
+        <button className="relative overflow-hidden bg-[#C04921] text-white border-none rounded-lg px-5 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-[13.5px] font-bold cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_20px_rgba(192,73,33,0.2)] z-10 group hover:bg-[#a63d1a]">
+          <span className="relative z-10 flex items-center justify-center gap-1.5 drop-shadow-sm">
             Get My Past Life Report
-            <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </span>
         </button>
       </div>
 
       {/* 2. Birth Chart Component */}
-      <div className="bg-white rounded-[24px] p-8 shadow-sm border border-black/5 mb-8 relative">
-        <h2 className="text-xl font-bold mb-1 text-dark-navy">Your birth chart</h2>
-        <p className="text-gray-600 text-sm mb-10">Highlighted houses & planets are what this reading focuses on.</p>
+      <div className="bg-white rounded-2xl p-5 sm:p-6 md:p-7 shadow-sm border border-black/5 mb-6 relative">
+        <div className="flex justify-between items-start mb-1">
+          <div>
+            <h2 className="text-base sm:text-[17px] font-bold text-dark-navy">Your birth chart</h2>
+            <p className="text-gray-500 text-xs sm:text-[12.5px] mb-6">Highlighted houses & planets are what this reading focuses on.</p>
+          </div>
+          {activeReport?.chart?.ascendant?.sign && (
+            <span className="px-2.5 py-1 rounded-md bg-[#C04921]/10 text-[#C04921] font-bold text-[10px] uppercase tracking-wider">
+              {activeReport.chart.ascendant.sign} Ascendant
+            </span>
+          )}
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
 
-          {/* North Indian Chart Mockup */}
+          {/* North Indian Chart */}
           <div className="flex flex-col items-center">
-            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4">North</span>
-            <div className="w-full max-w-[280px] aspect-square relative border border-black/10 overflow-hidden text-xs">
+            <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-2.5">North Indian Chart</span>
+            <div className="w-full max-w-[260px] aspect-square relative border border-black/10 overflow-hidden text-xs">
               {/* Grid Lines */}
               <svg className="absolute inset-0 w-full h-full text-dark-navy/20" stroke="currentColor" strokeWidth="1">
                 <line x1="0" y1="0" x2="100%" y2="100%" />
@@ -57,167 +324,343 @@ const WelcomeContent = () => {
                 <line x1="50%" y1="100%" x2="0" y2="50%" />
                 <line x1="0" y1="50%" x2="50%" y2="0" />
               </svg>
-              {/* Highlight Triangle */}
-              <svg className="absolute inset-0 w-full h-full text-[#C04921]/10 fill-current" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <polygon points="50,0 100,0 50,50" />
+
+              {/* Highlight 5th House Triangle */}
+              <svg className="absolute inset-0 w-full h-full text-[#C04921]/15 fill-current" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <polygon points="0,50 25,75 0,100" />
               </svg>
-              <svg className="absolute inset-0 w-full h-full text-[#C04921]" stroke="currentColor" strokeWidth="2" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <polygon points="50,0 100,0 50,50" fill="none" />
+              <svg className="absolute inset-0 w-full h-full text-[#C04921]" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <polygon points="0,50 25,75 0,100" fill="none" />
               </svg>
 
-              {/* Data Points */}
-              <div className="absolute top-2 left-1/4 text-gray-600">12</div>
-              <div className="absolute top-1/4 left-2 text-gray-600">1</div>
-              <div className="absolute top-1/2 left-8 text-gray-600">2</div>
-              <div className="absolute bottom-1/4 left-2 text-gray-600">3</div>
-              <div className="absolute bottom-2 left-1/4 text-gray-600">4</div>
-              <div className="absolute bottom-2 right-1/4 text-gray-600">6</div>
-              <div className="absolute bottom-1/4 right-2 text-gray-600">7</div>
-              <div className="absolute top-1/2 right-8 text-gray-600">8</div>
-              <div className="absolute top-1/4 right-2 text-gray-600">9</div>
-              <div className="absolute top-2 right-1/4 text-[#C04921] font-bold">10</div>
-              <div className="absolute top-8 right-[30%] text-gray-600">11</div>
+              {/* House 1: Top Center Diamond (Ascendant / Lagna) */}
+              <div className="absolute top-[25%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
+                <div className="flex items-center gap-1 mb-0.5">
+                  <span className="text-[10px] font-bold text-gray-500 leading-none">{getHouseInfo(1).signNum}</span>
+                  <span className="text-[6.5px] font-extrabold text-[#C04921] uppercase tracking-wider bg-[#C04921]/15 px-1 py-0.5 rounded leading-none">ASC</span>
+                </div>
+                <span className="text-[10.5px] font-bold leading-tight">{renderPlanets(getHouseInfo(1), true)}</span>
+              </div>
 
-              <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-gray-200">Mo</div>
-              <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2 font-bold text-gray-200">Me Ve</div>
-              <div className="absolute top-8 right-8 font-bold text-[#C04921]">Ju<sup className="font-normal text-[8px]">R</sup> Ra<sup className="font-normal text-[8px]">R</sup></div>
-              <div className="absolute bottom-[35%] left-8 font-bold text-gray-200">Ma</div>
-              <div className="absolute bottom-8 left-1/4 font-bold text-[#C04921]/70">Ke</div>
-              <div className="absolute bottom-[20%] right-1/4 font-bold text-gray-200">Su <span className="text-[#C04921]">Sa</span></div>
+              {/* House 2: Top Left Triangle */}
+              <div className="absolute top-[10%] left-[25%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
+                <span className="text-[9.5px] text-gray-400 leading-none mb-0.5">{getHouseInfo(2).signNum}</span>
+                <span className="text-[10px] font-bold leading-tight">{renderPlanets(getHouseInfo(2))}</span>
+              </div>
+
+              {/* House 3: Left Top Triangle */}
+              <div className="absolute top-[25%] left-[8.3%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
+                <span className="text-[9.5px] text-gray-400 leading-none mb-0.5">{getHouseInfo(3).signNum}</span>
+                <span className="text-[10px] font-bold leading-tight">{renderPlanets(getHouseInfo(3))}</span>
+              </div>
+
+              {/* House 4: Left Diamond */}
+              <div className="absolute top-1/2 left-[25%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center max-w-[80px]">
+                <span className="text-[10px] font-bold text-gray-500 leading-none mb-0.5">{getHouseInfo(4).signNum}</span>
+                <span className="text-[10px] font-bold leading-tight">{renderPlanets(getHouseInfo(4))}</span>
+              </div>
+
+              {/* House 5: Bottom Left Triangle (Highlighted Karma House) */}
+              <div className="absolute top-[75%] left-[8.3%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
+                <span className="text-[10px] font-bold text-[#C04921] leading-none mb-0.5">{getHouseInfo(5).signNum}</span>
+                <span className="text-[10.5px] font-bold leading-tight">{renderPlanets(getHouseInfo(5), true)}</span>
+              </div>
+
+              {/* House 6: Bottom Left Triangle */}
+              <div className="absolute top-[90%] left-[25%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
+                <span className="text-[9.5px] text-gray-400 leading-none mb-0.5">{getHouseInfo(6).signNum}</span>
+                <span className="text-[10px] font-bold leading-tight">{renderPlanets(getHouseInfo(6))}</span>
+              </div>
+
+              {/* House 7: Bottom Center Diamond */}
+              <div className="absolute top-[75%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
+                <span className="text-[10px] font-bold text-gray-500 leading-none mb-0.5">{getHouseInfo(7).signNum}</span>
+                <span className="text-[10px] font-bold leading-tight">{renderPlanets(getHouseInfo(7))}</span>
+              </div>
+
+              {/* House 8: Bottom Right Triangle */}
+              <div className="absolute top-[90%] left-[75%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
+                <span className="text-[9.5px] text-gray-400 leading-none mb-0.5">{getHouseInfo(8).signNum}</span>
+                <span className="text-[10px] font-bold leading-tight">{renderPlanets(getHouseInfo(8))}</span>
+              </div>
+
+              {/* House 9: Right Bottom Triangle */}
+              <div className="absolute top-[75%] left-[91.7%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
+                <span className="text-[9.5px] text-gray-400 leading-none mb-0.5">{getHouseInfo(9).signNum}</span>
+                <span className="text-[10px] font-bold leading-tight">{renderPlanets(getHouseInfo(9))}</span>
+              </div>
+
+              {/* House 10: Right Diamond */}
+              <div className="absolute top-1/2 left-[75%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center max-w-[80px]">
+                <span className="text-[10px] font-bold text-gray-500 leading-none mb-0.5">{getHouseInfo(10).signNum}</span>
+                <span className="text-[10px] font-bold leading-tight">{renderPlanets(getHouseInfo(10))}</span>
+              </div>
+
+              {/* House 11: Right Top Triangle */}
+              <div className="absolute top-[25%] left-[91.7%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
+                <span className="text-[9.5px] text-gray-400 leading-none mb-0.5">{getHouseInfo(11).signNum}</span>
+                <span className="text-[10px] font-bold leading-tight">{renderPlanets(getHouseInfo(11))}</span>
+              </div>
+
+              {/* House 12: Top Right Triangle */}
+              <div className="absolute top-[10%] left-[75%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
+                <span className="text-[9.5px] text-gray-400 leading-none mb-0.5">{getHouseInfo(12).signNum}</span>
+                <span className="text-[10px] font-bold leading-tight">{renderPlanets(getHouseInfo(12))}</span>
+              </div>
             </div>
           </div>
 
-          {/* South Indian Chart Mockup */}
+          {/* South Indian Chart */}
           <div className="flex flex-col items-center">
-            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4">South</span>
-            <div className="w-full max-w-[280px] aspect-square border border-black/10 grid grid-cols-4 grid-rows-4 text-[10px] relative">
-              <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">2</div><div className="text-[8px] text-gray-600">PISCES</div></div>
-              <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">3</div><div className="text-[8px] text-gray-600">ARIES</div></div>
-              <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">4</div><div className="text-[8px] text-gray-600">TAURUS</div></div>
-              <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">5</div><div className="text-[8px] text-gray-600">GEMINI</div><div className="absolute bottom-1 left-1 font-bold text-xs text-gray-600">Ma</div></div>
+            <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-2.5">South Indian Chart</span>
+            <div className="w-full max-w-[260px] aspect-square border border-black/10 grid grid-cols-4 grid-rows-4 text-[9px] relative">
+              {/* Row 1 */}
+              {[southSigns[0], southSigns[1], southSigns[2], southSigns[3]].map(renderSouthBox)}
 
-              <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">1</div><div className="text-[8px] text-gray-600">AQUARIUS</div><div className="absolute bottom-1 left-1 font-bold text-xs text-gray-600">Mo</div></div>
-              <div className="col-span-2 row-span-2 flex items-center justify-center text-gray-600 font-serif text-lg">D1</div>
-              <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">6</div><div className="text-[8px] text-gray-600">CANCER</div><div className="absolute bottom-1 left-1 font-bold text-xs text-[#C04921]/70">Ke</div></div>
+              {/* Row 2 */}
+              {renderSouthBox(southSigns[4])}
+              <div className="col-span-2 row-span-2 flex items-center justify-center text-gray-400 font-serif text-base border border-black/5">D1</div>
+              {renderSouthBox(southSigns[5])}
 
-              <div className="border border-black/5 p-1 bg-[#C04921]/10 border-[#C04921] relative"><div className="font-bold text-[#C04921]">12</div><div className="text-[8px] text-[#C04921]/70">CAPRICORN</div><div className="absolute bottom-1 left-1 font-bold text-xs text-[#C04921]">Ju<sup className="font-normal text-[8px]">R</sup> Ra<sup className="font-normal text-[8px]">R</sup></div></div>
-              <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">7</div><div className="text-[8px] text-gray-600">LEO</div><div className="absolute bottom-1 left-1 font-bold text-xs text-gray-600">Me Ve</div></div>
+              {/* Row 3 */}
+              {renderSouthBox(southSigns[6])}
+              {renderSouthBox(southSigns[7])}
 
-              <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">11</div><div className="text-[8px] text-gray-600">SAGITTARIUS</div></div>
-              <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">10</div><div className="text-[8px] text-gray-600">SCORPIO</div></div>
-              <div className="border border-black/5 p-1"><div className="font-bold text-dark-navy">9</div><div className="text-[8px] text-gray-600">LIBRA</div></div>
-              <div className="border border-black/5 p-1 relative"><div className="font-bold text-dark-navy">8</div><div className="text-[8px] text-gray-600">VIRGO</div><div className="absolute bottom-1 left-1 font-bold text-xs text-gray-600">Su <span className="text-[#C04921]">Sa</span></div></div>
+              {/* Row 4 */}
+              {[southSigns[8], southSigns[9], southSigns[10], southSigns[11]].map(renderSouthBox)}
             </div>
           </div>
         </div>
 
         {/* 3. Dasha Timeline */}
-        <div className="mt-12">
-          <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4">Your Current Planetary Period · Vimshottari Dasha</div>
-          <div className="flex flex-wrap gap-4">
+        {(mahadasha || antardasha || pratyantar || nextAntardasha) && (
+          <div className="mt-8">
+            <div className="text-[9.5px] font-bold text-gray-500 uppercase tracking-wider mb-3">Your Current Planetary Period · Vimshottari Dasha</div>
+            <div className="flex flex-wrap gap-3">
 
-            <div className="bg-white border border-black/5 rounded-xl p-4 min-w-[140px] flex-1">
-              <div className="text-[9px] font-bold text-gray-600 uppercase tracking-wider mb-2">Mahadasha</div>
-              <div className="font-bold text-dark-navy text-lg mb-2 font-serif">Jupiter</div>
-              <div className="text-xs text-gray-600 leading-tight">Nov 2020 - Nov 2036</div>
+              {mahadasha && (
+                <div className="bg-white border border-black/5 rounded-xl p-3 sm:p-3.5 min-w-[120px] flex-1">
+                  <div className="text-[8.5px] font-bold text-gray-500 uppercase tracking-wider mb-1">Mahadasha</div>
+                  <div className="font-bold text-dark-navy text-sm sm:text-[15px] mb-1 font-serif">{mahadasha.planet}</div>
+                  {(mahadasha.start || mahadasha.end) && (
+                    <div className="text-[11px] text-gray-500 leading-tight">{mahadasha.start} - {mahadasha.end}</div>
+                  )}
+                </div>
+              )}
+
+              {antardasha && (
+                <div className="bg-[#C04921]/10 border border-[#C04921]/30 rounded-xl p-3 sm:p-3.5 min-w-[120px] flex-1">
+                  <div className="text-[8.5px] font-bold text-[#C04921] uppercase tracking-wider mb-1">Antardasha</div>
+                  <div className="font-bold text-[#C04921] text-sm sm:text-[15px] mb-1 font-serif">{antardasha.planet}</div>
+                  {(antardasha.start || antardasha.end) && (
+                    <div className="text-[11px] text-[#C04921]/70 leading-tight">{antardasha.start} - {antardasha.end}</div>
+                  )}
+                </div>
+              )}
+
+              {pratyantar && (
+                <div className="bg-white border border-black/5 rounded-xl p-3 sm:p-3.5 min-w-[120px] flex-1">
+                  <div className="text-[8.5px] font-bold text-gray-500 uppercase tracking-wider mb-1">Pratyantar</div>
+                  <div className="font-bold text-dark-navy text-sm sm:text-[15px] mb-1 font-serif">{pratyantar.planet}</div>
+                  {(pratyantar.start || pratyantar.end) && (
+                    <div className="text-[11px] text-gray-500 leading-tight">{pratyantar.start} - {pratyantar.end}</div>
+                  )}
+                </div>
+              )}
+
+              {nextAntardasha && (
+                <div className="bg-white border border-black/5 border-dashed rounded-xl p-3 sm:p-3.5 min-w-[120px] flex-1">
+                  <div className="text-[8.5px] font-bold text-gray-500 uppercase tracking-wider mb-1">Next Antardasha</div>
+                  <div className="font-bold text-dark-navy text-sm sm:text-[15px] mb-1 font-serif">{nextAntardasha.planet}</div>
+                  {(nextAntardasha.start || nextAntardasha.end) && (
+                    <div className="text-[11px] text-gray-500 leading-tight">{nextAntardasha.start} - {nextAntardasha.end}</div>
+                  )}
+                </div>
+              )}
+
             </div>
-
-            <div className="bg-[#C04921]/10 border border-[#C04921]/30 rounded-xl p-4 min-w-[140px] flex-1">
-              <div className="text-[9px] font-bold text-[#C04921] uppercase tracking-wider mb-2">Antardasha</div>
-              <div className="font-bold text-[#C04921] text-lg mb-2 font-serif">Mercury</div>
-              <div className="text-xs text-[#C04921]/70 leading-tight">Jul 2025 - Oct 2027</div>
-            </div>
-
-            <div className="bg-white border border-black/5 rounded-xl p-4 min-w-[140px] flex-1">
-              <div className="text-[9px] font-bold text-gray-600 uppercase tracking-wider mb-2">Pratyantar</div>
-              <div className="font-bold text-dark-navy text-lg mb-2 font-serif">Mars</div>
-              <div className="text-xs text-gray-600 leading-tight">Sep 2026 - Oct 2026</div>
-            </div>
-
-            <div className="bg-white border border-black/5 border-dashed rounded-xl p-4 min-w-[140px] flex-1">
-              <div className="text-[9px] font-bold text-gray-600 uppercase tracking-wider mb-2">Next Antardasha</div>
-              <div className="font-bold text-dark-navy text-lg mb-2 font-serif">Ketu</div>
-              <div className="text-xs text-gray-600 leading-tight">Oct 2027 - Sep 2028</div>
-            </div>
-
           </div>
-        </div>
+        )}
       </div>
 
       {/* 4. Metrics & Insights Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-5">
 
-        {/* Strength Card */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-black/5 flex flex-col justify-center">
-          <div className="flex justify-between items-end mb-4">
-            <h3 className="font-bold text-dark-navy">Moksha (12th) Strength</h3>
-            <span className="text-3xl font-bold text-[#C04921]">83</span>
-          </div>
-          <div className="w-full bg-black/5 rounded-full h-2 mb-2 relative overflow-hidden">
-            <div className="bg-[#C04921] h-2 rounded-full w-[83%]"></div>
-          </div>
-          <div className="text-xs text-gray-600 mb-4">avg 52</div>
-          <p className="text-sm text-gray-600 leading-relaxed">A strong house of liberation — past-life merit supports your inner journey.</p>
-        </div>
-
-        {/* Premium Card */}
-        <div className="bg-white rounded-2xl p-6 border border-[#C04921]/20 flex flex-col justify-center relative">
-          <div className="flex justify-between items-end mb-4">
-            <h3 className="font-bold text-dark-navy">Spiritual Growth</h3>
-            <span className="text-3xl font-bold text-[#C04921]">76</span>
-          </div>
-          <div className="w-full bg-black/5 rounded-full h-2 mb-2 relative overflow-hidden">
-            <div className="bg-[#C04921] h-2 rounded-full w-[76%]"></div>
-          </div>
-          <div className="text-xs text-gray-600 mb-4">avg 48</div>
-          <p className="text-sm text-gray-600 leading-relaxed">Your soul has a high capacity for spiritual awakening and transformation in this lifetime.</p>
-        </div>
-
-        {/* Insight Card 1 */}
-        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-black/5">
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Ketu — Past-Life Karma</span>
-            <div className="bg-[#C04921]/20 text-[#C04921] text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full flex items-center gap-2">
-              Cancer <span className="w-1 h-1 rounded-full bg-[#C04921]"></span> Pushya
+        {/* 1. Past-Life Karma Card (Real-Time from API) */}
+        {karmaContent && (
+          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 flex flex-col justify-between min-h-[150px]">
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-bold text-dark-navy text-sm sm:text-base font-serif">
+                  {karmaTitle}
+                </h3>
+              </div>
+              <div className="w-full h-px bg-black/5 mb-3"></div>
             </div>
+            <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
+              {karmaContent}
+            </p>
           </div>
-          <h3 className="text-xl font-bold font-serif text-dark-navy mb-4">What your soul already mastered</h3>
-          <p className="text-gray-600 leading-relaxed">In a past life you nurtured and protected — emotion runs deep; this life asks you to step into authority.</p>
-        </div>
+        )}
 
-        {/* Insight Card 2 */}
-        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-black/5">
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">12th House — Moksha & Release</span>
-            <div className="bg-[#C04921]/20 text-[#C04921] text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
-              Capricorn
-            </div>
-          </div>
-          <h3 className="text-xl font-bold font-serif text-dark-navy mb-4">Your 12th house falls in Capricorn</h3>
-          <p className="text-gray-600 leading-relaxed">Your 12th lord Saturn sits in the 8th house, showing where your release, retreat and spiritual growth play out this life.</p>
-        </div>
-
-      </div>
-
-      {/* 5. Summary & Direction */}
-      <div className="bg-[#C04921]/20 text-[#C04921] text-sm md:text-base font-medium p-4 md:p-6 rounded-xl mb-6 border border-[#C04921]/10">
-        Your dominant past-life theme: The Servant-Warrior — past struggles and service, now seeking balance.
-      </div>
-
-      <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-black/5 mb-12">
-        <div className="flex items-start gap-3 mb-2">
-          <div className="w-3 h-3 rounded-full bg-green-500 mt-1 flex-shrink-0 shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
+        {/* 2. Spiritual Growth Card (Dynamic from API) */}
+        <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 flex flex-col justify-between min-h-[150px]">
           <div>
-            <h3 className="text-lg font-bold text-dark-navy mb-1">Your Soul's Direction</h3>
-            <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">· Rahu-Ketu Axis</span>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-bold text-dark-navy text-sm sm:text-base font-serif">
+                {spiritualGrowth?.title}
+              </h3>
+
+            </div>
+            <div className="w-full h-px bg-black/5 mb-3"></div>
           </div>
+          <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
+            {spiritualGrowth?.content}
+          </p>
         </div>
-        <p className="text-gray-600 leading-relaxed mt-2 pl-6">
-          This life, your soul moves toward spirituality, release and liberation — the growth your Rahu calls you into.
-        </p>
+
+        {/* Strength Card - 5th Lord */}
+        {fifthLord && (
+          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 flex flex-col justify-center">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy">Karma (5th) House Potency</h3>
+              <span className="bg-[#C04921]/15 text-[#C04921] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">
+                5th Lord: {fifthLord.planet} in {fifthLord.sign} ({fifthLord.house}H)
+              </span>
+            </div>
+            <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
+              {fifthLord.statement}
+            </p>
+            {fifthLord.area && (
+              <div className="mt-2.5 pt-2 border-t border-black/5 text-[11px] font-medium text-gray-500">
+                <span className="text-[#C04921] font-bold">Karmic Life Areas:</span> {fifthLord.area}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Planet in 5th House / Primary Karma Card */}
+        {planetInFifth ? (
+          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-[#C04921]/20 flex flex-col justify-center relative">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-[9px] font-bold text-[#C04921] uppercase tracking-wider bg-[#C04921]/10 px-2 py-0.5 rounded-full">
+                {planetInFifth.planet} in 5th House
+              </span>
+              {planetInFifth.area && (
+                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
+                  {planetInFifth.area}
+                </span>
+              )}
+            </div>
+            <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy mb-2">
+              {planetInFifth.area ? `Karmic Focus: ${planetInFifth.area}` : "5th House Placement"}
+            </h3>
+            <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
+              {planetInFifth.content || planetInFifth.statement}
+            </p>
+          </div>
+        ) : primaryKarmaItem ? (
+          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-[#C04921]/20 flex flex-col justify-center relative">
+            {primaryKarmaItem.area && (
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-[9px] font-bold text-[#C04921] uppercase tracking-wider bg-[#C04921]/10 px-2 py-0.5 rounded-full">
+                  {primaryKarmaItem.area}
+                </span>
+              </div>
+            )}
+            <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy mb-2">
+              Primary Karmic Pattern
+            </h3>
+            <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
+              {primaryKarmaItem.statement}
+            </p>
+          </div>
+        ) : null}
+
+        {/* Insight Card - Soul Mastery */}
+        {soulMastery && (
+          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5">
+            <div className="flex flex-wrap items-center gap-2 mb-2.5">
+              {soulMastery.label && (
+                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
+                  {soulMastery.label}
+                </span>
+              )}
+              {soulMastery.badge && (
+                <div className="bg-[#C04921]/15 text-[#C04921] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full flex items-center gap-1.5">
+                  {soulMastery.badge}
+                </div>
+              )}
+            </div>
+            {soulMastery.title && (
+              <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy mb-2">
+                {soulMastery.title}
+              </h3>
+            )}
+            <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
+              {soulMastery.content || soulMastery.statement}
+            </p>
+          </div>
+        )}
+
+        {/* Insight Card - 5th House */}
+        {fifthHouse && (
+          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5">
+            <div className="flex flex-wrap items-center gap-2 mb-2.5">
+              {fifthHouse.label && (
+                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
+                  {fifthHouse.label}
+                </span>
+              )}
+              {fifthHouse.badge && (
+                <div className="bg-[#C04921]/15 text-[#C04921] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">
+                  {fifthHouse.badge}
+                </div>
+              )}
+            </div>
+            {fifthHouse.title && (
+              <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy mb-2">
+                {fifthHouse.title}
+              </h3>
+            )}
+            <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
+              {fifthHouse.content || fifthHouse.statement}
+            </p>
+          </div>
+        )}
+
       </div>
 
+      {/* 5. Summary & Direction Banner */}
+      {dominantTheme && (
+        <div className="bg-[#C04921]/15 text-[#C04921] text-xs sm:text-[13px] font-medium p-3.5 sm:p-4 rounded-xl mb-5 border border-[#C04921]/10">
+          {dominantTheme}
+        </div>
+      )}
 
+      {/* Soul's Direction Card */}
+      {soulDirection?.content && (
+        <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 mb-8">
+          <div className="flex items-start gap-2.5 mb-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-green-500 mt-1 flex-shrink-0 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
+            <div>
+              {soulDirection.title && (
+                <h3 className="text-sm sm:text-[14.5px] font-bold text-dark-navy mb-0.5">
+                  {soulDirection.title}
+                </h3>
+              )}
+              {soulDirection.label && (
+                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
+                  {soulDirection.label.startsWith('·') ? soulDirection.label : `· ${soulDirection.label}`}
+                </span>
+              )}
+            </div>
+          </div>
+          <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed mt-1 pl-5">
+            {soulDirection.content}
+          </p>
+        </div>
+      )}
 
     </div>
   );

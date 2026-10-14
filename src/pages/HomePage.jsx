@@ -10,7 +10,21 @@ import Testimonials from '../components/Testimonials/Testimonials';
 import FAQ from '../components/FAQ/FAQ';
 
 const HomePage = () => {
-  const [showReport, setShowReport] = useState(false);
+  const [reportData, setReportData] = useState(() => {
+    try {
+      const stored = localStorage.getItem('past_life_report');
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [showReport, setShowReport] = useState(() => {
+    try {
+      return Boolean(localStorage.getItem('past_life_report'));
+    } catch {
+      return false;
+    }
+  });
   const [showFormModal, setShowFormModal] = useState(false);
 
   return (
@@ -30,17 +44,44 @@ const HomePage = () => {
             }} />
           </div>
           {/* Image container: placed on top (order-1) on mobile & tablet, and right side (order-2) on laptop */}
-          <div className="relative flex justify-center lg:justify-end items-center h-full w-full order-1 lg:order-2">
-            <div className="relative w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[500px] aspect-square animate-float-slow" style={{ maskImage: 'radial-gradient(circle, black 55%, transparent 75%)', WebkitMaskImage: 'radial-gradient(circle, black 55%, transparent 75%)' }}>
-              <img src="/orange_human_karma_hero.jpg" alt="Vedic Past Life Karma Meditation" className="w-full h-full object-cover" />
+          <div className="relative flex justify-center lg:justify-end items-center h-full w-full order-1 lg:order-2 py-4">
+            {/* Responsive Circle Stage with Seamless Background Blending */}
+            <div className="relative flex items-center justify-center w-full max-w-[320px] sm:max-w-[400px] md:max-w-[450px] lg:max-w-[500px] aspect-square">
+              {/* Soft Ambient Golden/Terracotta Aura Glow */}
+              <div className="absolute inset-[-10%] rounded-full bg-gradient-to-tr from-[#C04921]/25 via-[#F59E0B]/20 to-transparent blur-3xl pointer-events-none animate-pulse-slow"></div>
+
+              {/* Delicate Outer Orbital Celestial Ring */}
+              <div
+                className="absolute inset-[-6%] rounded-full border border-dashed border-[#C04921]/20 pointer-events-none animate-spin"
+                style={{ animationDuration: '90s' }}
+              ></div>
+
+              {/* Faint Concentric Sacred Geometry Ring */}
+              <div className="absolute inset-[-1%] rounded-full border border-[#F59E0B]/20 pointer-events-none"></div>
+
+              {/* Seamlessly Feathered Masked Hero Image */}
+              <div
+                className="relative z-10 w-full h-full aspect-square rounded-full overflow-hidden animate-float-slow"
+                style={{
+                  maskImage: 'radial-gradient(circle at center, black 46%, rgba(0,0,0,0.85) 54%, rgba(0,0,0,0.4) 63%, transparent 70%)',
+                  WebkitMaskImage: 'radial-gradient(circle at center, black 46%, rgba(0,0,0,0.85) 54%, rgba(0,0,0,0.4) 63%, transparent 70%)'
+                }}
+              >
+                <img
+                  src="/orange_human_karma_hero.jpg"
+                  alt="Vedic Past Life Karma Meditation"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div id="lead-form-section" className="relative z-10 max-w-[1250px] mx-auto px-6 md:px-8 w-full flex justify-center mt-10 lg:mt-16 mb-4 lg:mb-8">
-        <div className="w-full max-w-[500px] animate-fade-in-up">
-          <LeadForm onReportReady={() => {
+      <div id="lead-form-section" className="relative z-10 max-w-[1250px] mx-auto px-6 md:px-8 w-full flex justify-center mt-8 lg:mt-12 mb-4 lg:mb-6">
+        <div className="w-full max-w-[440px] animate-fade-in-up">
+          <LeadForm onReportReady={(data) => {
+            setReportData(data);
             setShowReport(true);
             setTimeout(() => {
               const reportSection = document.getElementById('report-section');
@@ -56,7 +97,7 @@ const HomePage = () => {
       {showReport && (
         <div id="report-section" className="relative z-10 w-full mt-12 animate-fade-in min-h-screen max-w-[1250px] mx-auto px-6 md:px-8">
           <div className="bg-white/5 backdrop-blur-2xl rounded-3xl p-6 md:p-10 shadow-[0_20px_40px_rgba(0,0,0,0.3)] border border-white/10">
-            <WelcomeContent />
+            <WelcomeContent reportData={reportData} />
           </div>
         </div>
       )}
@@ -73,23 +114,24 @@ const HomePage = () => {
             </svg>
             <div className="w-12 h-[2px] bg-[#C04921]"></div>
           </div>
-          <h2 className="text-3xl md:text-5xl text-dark-navy font-bold font-serif mb-4 drop-shadow-sm">What's Inside <span className="text-[#C04921]">Your Report</span></h2>
-          <p className="text-gray-600 text-base md:text-lg max-w-lg mx-auto">A complete, personalised reading of your karmic story, broken down into 6 profound chapters.</p>
+          <h2 className="text-2xl sm:text-3xl md:text-[2.15rem] text-dark-navy font-bold font-serif mb-3 drop-shadow-sm">What's Inside <span className="text-[#C04921]">Your Report</span></h2>
+          <p className="text-gray-500 text-sm md:text-[15px] max-w-md mx-auto leading-relaxed">A complete, personalised reading of your karmic story, broken down into 6 profound chapters.</p>
         </div>
         <div className="mb-12 md:mb-20">
           <ReportDetails />
         </div>
-        <div className="flex justify-center mb-4 md:mb-6">
+        <div className="flex justify-center mb-8 md:mb-12">
           <Pricing />
         </div>
-        <Benefits />
       </div>
+
+      <Benefits />
 
       <Testimonials />
       <FAQ />
 
       {/* Final CTA Section */}
-      <div className="w-full bg-[#FAF8F2] pb-20 md:pb-28 px-6 md:px-8">
+      <div className="w-full bg-transparent pb-20 md:pb-28 px-6 md:px-8">
         <div className="w-full max-w-[700px] mx-auto text-center">
           <h2 className="text-3xl md:text-[40px] text-[#1a1a1a] font-bold font-serif mb-4 leading-tight">
             Ready for the Full Story?

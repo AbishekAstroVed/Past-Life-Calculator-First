@@ -23,10 +23,9 @@ const Testimonials = () => {
   ];
 
   return (
-    <div className="relative w-full pt-4 md:pt-8 pb-4 md:pb-6 bg-[#FAF8F2] overflow-hidden">
-
-      {/* Decorative Background Elements */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[400px] bg-gradient-to-b from-[#C04921]/[0.03] to-transparent rounded-full blur-[80px] pointer-events-none"></div>
+    <div className="relative w-full pt-8 md:pt-16 pb-8 md:pb-12 bg-transparent overflow-hidden">
+      {/* Ambient Spiritual Glows for Testimonials */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] max-w-[800px] h-[350px] bg-gradient-to-r from-[#C04921]/10 via-[#F59E0B]/12 to-transparent rounded-full blur-[100px] pointer-events-none animate-pulse-slow"></div>
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-8">
 
@@ -36,7 +35,7 @@ const Testimonials = () => {
             <span className="text-[#C04921] text-xs">✦</span>
             Real Stories
           </div>
-          <h2 className="text-4xl md:text-5xl text-[#1a1a1a] font-bold font-serif leading-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-[2.15rem] text-[#1a1a1a] font-bold font-serif leading-tight">
             Loved by Seekers <span className="text-[#C04921] italic">Like You</span>
           </h2>
         </div>
@@ -46,7 +45,7 @@ const Testimonials = () => {
           {testimonials.map((item, index) => (
             <div
               key={index}
-              className="group bg-white rounded-3xl p-8 md:p-10 border border-[#C04921]/10 flex flex-col justify-between shadow-lg shadow-[#C04921]/[0.03] transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#C04921]/[0.08] relative overflow-hidden"
+              className="group bg-white/85 backdrop-blur-md rounded-3xl p-8 md:p-10 border border-[#C04921]/15 flex flex-col justify-between shadow-[0_8px_30px_rgba(192,73,33,0.06)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(192,73,33,0.12)] hover:border-[#C04921]/40 relative overflow-hidden"
             >
               {/* Decorative Quote Mark */}
               <div className="absolute top-4 right-6 text-9xl text-[#FAF8F2] font-serif leading-none select-none pointer-events-none group-hover:text-[#C04921]/5 transition-colors duration-300">

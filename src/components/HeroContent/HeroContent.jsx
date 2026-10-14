@@ -8,11 +8,11 @@ const HeroContent = ({ onCtaClick }) => {
         PAST LIFE & KARMA
       </div>
 
-      <h1 className="text-4xl sm:text-5xl lg:text-[4.5rem] font-serif font-bold leading-[1.1] text-[#1a1a1a] tracking-tight m-0">
-        What karma did<br className="hidden sm:block" /> <span className="text-[#C04921]">you</span> carry into this<br className="hidden sm:block" /> life?
+      <h1 className="text-2xl sm:text-[1.75rem] md:text-[2.1rem] lg:text-[2.55rem] xl:text-[2.85rem] font-serif font-bold leading-[1.2] text-[#1a1a1a] tracking-normal m-0">
+        What karma did <span className="text-[#C04921]">you</span> carry<br /> into this life?
       </h1>
 
-      <p className="text-base md:text-lg text-[#333333] max-w-[95%] leading-relaxed mt-2">
+      <p className="text-sm sm:text-[15px] md:text-base text-[#4a4a4a] max-w-[92%] leading-relaxed mt-1.5">
         Your Ketu, 12th house and the Rahu-Ketu axis reveal<br className="hidden lg:block" /> where your soul has been. Discover your past-life pattern<br className="hidden lg:block" /> — free, in seconds.
       </p>
 

@@ -2,20 +2,22 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import ReportPage from './pages/ReportPage'
+import CosmicCanvasBackground from './components/CosmicBackground/CosmicCanvasBackground'
 
 function App() {
   return (
     <Router>
-      <div className="relative min-h-screen bg-off-white overflow-hidden w-full font-sans text-dark-navy">
-        {/* Ambient background glows */}
-        <div className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-teal-900/20 rounded-full blur-[150px] pointer-events-none animate-pulse-slow"></div>
-        <div className="absolute top-[30%] left-[-5%] w-[40vw] h-[40vw] bg-[#6868f9]/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <div className="absolute bottom-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-teal-800/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="relative min-h-screen overflow-x-hidden w-full font-sans text-dark-navy">
+        {/* Full-Page Dynamic Living Cosmic Animation Canvas */}
+        <CosmicCanvasBackground />
 
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/report" element={<ReportPage />} />
-        </Routes>
+        {/* Page Content Layers */}
+        <div className="relative z-10 w-full">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/report" element={<ReportPage />} />
+          </Routes>
+        </div>
       </div>
     </Router>
   )
