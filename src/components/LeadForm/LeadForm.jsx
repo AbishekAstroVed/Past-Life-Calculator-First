@@ -188,7 +188,7 @@ const CityAutocomplete = ({ value, country, onChange, name, placeholder, icon: I
     }
     setIsLoading(true);
     try {
-      const locationBase = import.meta.env.VITE_LOCATION_API_URL || " https://webservice.astroved.com/Api/Panchang/PopulateCityBycountry";
+      const locationBase = (import.meta.env.VITE_LOCATION_API_URL || "https://webservice.astroved.com/Api/Panchang/PopulateCityBycountry").trim();
       const apiUrl = `${locationBase}/${encodeURIComponent(country)}/${encodeURIComponent(searchTerm)}`;
       const response = await fetch(apiUrl, {
         headers: {
@@ -308,7 +308,7 @@ const LeadForm = ({ onReportReady }) => {
       // 1. Resolve location data strictly from Location API
       let geoCity = formData.city.trim();
       let geoState = selectedCityData?.StateorProvince || '';
-      let geoCountry = selectedCityData?.Country || formData.country || 'India';
+      let geoCountry = selectedCityData?.Country || formData.country;
       let geoLatitude = selectedCityData?.Latitude ? parseFloat(selectedCityData.Latitude) : null;
       let geoLongitude = selectedCityData?.Longitude ? parseFloat(selectedCityData.Longitude) : null;
 
@@ -383,7 +383,7 @@ const LeadForm = ({ onReportReady }) => {
 
       console.log('Passing real-time data to backend API:', payload);
 
-      const apiUrl = import.meta.env.VITE_BACKEND_URL;
+      const apiUrl = (import.meta.env.VITE_BACKEND_URL || "https://sprint-common-nutlike.ngrok-free.dev/past-life/report").trim();
       let response;
 
       try {
