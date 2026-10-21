@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import countryData from '../../utils/country.json';
 import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
 
@@ -188,7 +188,7 @@ const CityAutocomplete = ({ value, country, onChange, name, placeholder, icon: I
     }
     setIsLoading(true);
     try {
-      const locationBase = import.meta.env.VITE_LOCATION_API_URL || 'https://webservice.astroved.com/Api/Panchang/PopulateCityBycountry';
+      const locationBase = import.meta.env.VITE_LOCATION_API_URL;
       const apiUrl = `${locationBase}/${encodeURIComponent(country)}/${encodeURIComponent(searchTerm)}`;
       const response = await fetch(apiUrl, {
         headers: {
@@ -258,6 +258,7 @@ const CityAutocomplete = ({ value, country, onChange, name, placeholder, icon: I
 
 const LeadForm = ({ onReportReady }) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [showReport, setShowReport] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '', gender: 'female', email: '',
@@ -302,7 +303,7 @@ const LeadForm = ({ onReportReady }) => {
     let reportData = null;
 
     try {
-      const locationBase = import.meta.env.VITE_LOCATION_API_URL || 'https://webservice.astroved.com/Api/Panchang/PopulateCityBycountry';
+      const locationBase = import.meta.env.VITE_LOCATION_API_URL;
 
       // 1. Resolve location data strictly from Location API
       let geoCity = formData.city.trim();
@@ -363,6 +364,8 @@ const LeadForm = ({ onReportReady }) => {
       const dateOfBirth = `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00`;
 
       // 3. Construct API payload conforming exactly to required schema
+      const promoCode = searchParams.get("promo") || "empty";
+
       const payload = {
         name: formData.fullName.trim(),
         email: formData.email.trim(),
@@ -374,24 +377,35 @@ const LeadForm = ({ onReportReady }) => {
         latitude: geoLatitude,
         longitude: geoLongitude,
         ayanamsa: 'LAHIRI',
-        house_system: 'WHOLE_SIGN'
+        house_system: 'WHOLE_SIGN',
+        promo: promoCode
       };
 
       console.log('Passing real-time data to backend API:', payload);
 
-      const apiUrl =
-        import.meta.env.VITE_BACKEND_URL ||
-        'https://sprint-common-nutlike.ngrok-free.dev/past-life/report';
+      const apiUrl = import.meta.env.VITE_BACKEND_URL;
+      let response;
 
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': 'true'
-        },
-        body: JSON.stringify(payload)
-      });
-
+      try {
+        response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true'
+          },
+          body: JSON.stringify(payload)
+        });
+      } catch (directErr) {
+        console.warn('Direct connection to VITE_BACKEND_URL failed (SSL/Network error), retrying via local proxy:', directErr);
+        response = await fetch('/past-life/report', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true'
+          },
+          body: JSON.stringify(payload)
+        });
+      }
 
       if (!response.ok) {
         const errText = await response.text();

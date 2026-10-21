@@ -1,30 +1,35 @@
 import React from 'react';
 
-const Pricing = () => {
+const Pricing = ({ className = '' }) => {
   return (
-    <div className="w-full flex justify-center mt-6 mb-2 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-      {/* Clean White Card */}
-      <div className="bg-white rounded-[20px] p-8 md:p-10 text-center border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] w-full max-w-lg">
+    <div className={`w-full flex justify-center my-4 animate-fade-in-up ${className}`}>
+      {/* Clean White Compact Card */}
+      <div className="bg-white rounded-2xl p-5 sm:p-6 text-center border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.06)] w-full max-w-[390px]">
         
-        {/* Pricing Header */}
-        <div className="flex items-center justify-center gap-4 mb-8 flex-wrap">
-          <span className="text-gray-500 line-through text-2xl font-serif">₹999</span>
-          <span className="text-[#1a1a1a] font-bold text-5xl md:text-6xl font-serif">₹490</span>
+        {/* Pricing Header: Strikethrough price + Current price + Discount badge */}
+        <div className="flex items-center justify-between gap-2 mb-4">
+          <div className="flex items-center gap-2">
+            <span className="text-slate-400 line-through text-base sm:text-lg font-serif">₹999</span>
+            <span className="text-dark-navy font-bold text-3xl sm:text-[34px] font-serif leading-none">₹490</span>
+          </div>
           
           {/* Discount Badge */}
-          <div className="bg-[#C04921] text-white px-4 py-1.5 rounded-full text-sm font-bold tracking-wide ml-2">
+          <div className="bg-[#C04921] text-white px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold tracking-tight whitespace-nowrap shadow-sm">
             51% OFF · Limited offer
           </div>
         </div>
 
         {/* CTA Button */}
-        <button className="w-full bg-[#C04921] text-white border-none rounded-xl px-6 py-4 text-lg font-bold cursor-pointer transition-transform hover:-translate-y-1 shadow-[0_5px_15px_rgba(192,73,33,0.2)] hover:shadow-[0_8px_25px_rgba(192,73,33,0.3)] flex items-center justify-center gap-2 whitespace-nowrap">
+        <button
+          type="button"
+          className="w-full bg-[#C04921] hover:bg-[#a63d1a] active:scale-[0.99] text-white border-none rounded-xl py-3 px-4 text-sm sm:text-[15px] font-bold cursor-pointer transition-all duration-200 shadow-sm flex items-center justify-center gap-2 group"
+        >
           <span>Get My Past Life Report</span>
-          <span>→</span>
+          <span className="transition-transform group-hover:translate-x-1">→</span>
         </button>
 
         {/* Footer Text */}
-        <p className="text-gray-500 text-sm mt-5 font-medium">
+        <p className="text-slate-500 text-xs mt-3 font-normal text-center">
           Full report delivered as PDF
         </p>
         

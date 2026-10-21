@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import Pricing from '../Pricing/Pricing';
 
-const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDirection }) => {
+const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDirection, isLoading = false }) => {
   const [internalReport, setInternalReport] = useState(propReportData || null);
 
   // Sync prop changes whenever user submits form
@@ -25,20 +26,14 @@ const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDir
   const karmaContent = karma?.content || (typeof karma === 'string' ? karma : null);
   const karmaTitle = karma?.title || "Past-Life Karma";
 
-  const fifthLord = activeReport?.karma?.fifth_lord || null;
-  const planetsInFifth = activeReport?.karma?.planets_in_fifth || [];
-  const primaryKarma = activeReport?.karma?.primary_karma || [];
-  const planetInFifth = planetsInFifth[0] || null;
-  const primaryKarmaItem = primaryKarma[0] || null;
-
-  const currentDasha = activeReport?.dasha?.current_dasha || null;
+  const dashaData = activeReport?.dasha || null;
+  const currentDasha = dashaData?.current_dasha || dashaData || null;
   const mahadasha = currentDasha?.mahadasha || null;
   const antardasha = currentDasha?.antardasha || null;
   const pratyantar = currentDasha?.pratyantar || null;
-  const nextAntardasha = currentDasha?.next_antardasha || null;
+  const nextAntardasha = currentDasha?.next_antardasha || currentDasha?.nextAntardasha || null;
 
-  const dominantTheme =
-    "Your dominant past-life theme: The Provider — past-life focus on wealth and family, now refining values.";
+  const dominantTheme = "Your dominant past-life theme: The Ruler — past-life authority and duty, now learning surrender."
 
   // Helper mappings for charts
   const planetAbbr = {
@@ -377,45 +372,53 @@ const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDir
         {/* 3. Dasha Timeline */}
         {(mahadasha || antardasha || pratyantar || nextAntardasha) && (
           <div className="mt-8">
-            <div className="text-[9.5px] font-bold text-gray-500 uppercase tracking-wider mb-3">Your Current Planetary Period · Vimshottari Dasha</div>
-            <div className="flex flex-wrap gap-3">
+            <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-3">Your Current Planetary Period · Vimshottari Dasha</div>
+            <div className="flex flex-wrap gap-3 sm:gap-4">
 
               {mahadasha && (
-                <div className="bg-white border border-black/5 rounded-xl p-3 sm:p-3.5 min-w-[120px] flex-1">
-                  <div className="text-[8.5px] font-bold text-gray-500 uppercase tracking-wider mb-1">Mahadasha</div>
-                  <div className="font-bold text-dark-navy text-sm sm:text-[15px] mb-1 font-serif">{mahadasha.planet}</div>
+                <div className="bg-white border border-gray-100 rounded-2xl p-4 sm:p-5 min-w-[130px] flex-1 shadow-sm">
+                  <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Mahadasha</div>
+                  <div className="font-bold text-dark-navy text-xl sm:text-2xl mb-1 font-serif">{mahadasha.planet}</div>
                   {(mahadasha.start || mahadasha.end) && (
-                    <div className="text-[11px] text-gray-500 leading-tight">{mahadasha.start} - {mahadasha.end}</div>
+                    <div className="text-xs text-gray-500 font-normal leading-tight">
+                      {mahadasha.start && mahadasha.end ? `${mahadasha.start} - ${mahadasha.end}` : (mahadasha.start || mahadasha.end)}
+                    </div>
                   )}
                 </div>
               )}
 
               {antardasha && (
-                <div className="bg-[#C04921]/10 border border-[#C04921]/30 rounded-xl p-3 sm:p-3.5 min-w-[120px] flex-1">
-                  <div className="text-[8.5px] font-bold text-[#C04921] uppercase tracking-wider mb-1">Antardasha</div>
-                  <div className="font-bold text-[#C04921] text-sm sm:text-[15px] mb-1 font-serif">{antardasha.planet}</div>
+                <div className="bg-[#C04921]/10 border border-[#C04921]/30 rounded-2xl p-4 sm:p-5 min-w-[130px] flex-1 shadow-sm">
+                  <div className="text-[10px] font-bold text-[#C04921] uppercase tracking-wider mb-1.5">Antardasha</div>
+                  <div className="font-bold text-[#C04921] text-xl sm:text-2xl mb-1 font-serif">{antardasha.planet}</div>
                   {(antardasha.start || antardasha.end) && (
-                    <div className="text-[11px] text-[#C04921]/70 leading-tight">{antardasha.start} - {antardasha.end}</div>
+                    <div className="text-xs text-[#C04921]/80 font-normal leading-tight">
+                      {antardasha.start && antardasha.end ? `${antardasha.start} - ${antardasha.end}` : (antardasha.start || antardasha.end)}
+                    </div>
                   )}
                 </div>
               )}
 
               {pratyantar && (
-                <div className="bg-white border border-black/5 rounded-xl p-3 sm:p-3.5 min-w-[120px] flex-1">
-                  <div className="text-[8.5px] font-bold text-gray-500 uppercase tracking-wider mb-1">Pratyantar</div>
-                  <div className="font-bold text-dark-navy text-sm sm:text-[15px] mb-1 font-serif">{pratyantar.planet}</div>
+                <div className="bg-white border border-gray-100 rounded-2xl p-4 sm:p-5 min-w-[130px] flex-1 shadow-sm">
+                  <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Pratyantar</div>
+                  <div className="font-bold text-dark-navy text-xl sm:text-2xl mb-1 font-serif">{pratyantar.planet}</div>
                   {(pratyantar.start || pratyantar.end) && (
-                    <div className="text-[11px] text-gray-500 leading-tight">{pratyantar.start} - {pratyantar.end}</div>
+                    <div className="text-xs text-gray-500 font-normal leading-tight">
+                      {pratyantar.start && pratyantar.end ? `${pratyantar.start} - ${pratyantar.end}` : (pratyantar.start || pratyantar.end)}
+                    </div>
                   )}
                 </div>
               )}
 
               {nextAntardasha && (
-                <div className="bg-white border border-black/5 border-dashed rounded-xl p-3 sm:p-3.5 min-w-[120px] flex-1">
-                  <div className="text-[8.5px] font-bold text-gray-500 uppercase tracking-wider mb-1">Next Antardasha</div>
-                  <div className="font-bold text-dark-navy text-sm sm:text-[15px] mb-1 font-serif">{nextAntardasha.planet}</div>
+                <div className="bg-white border border-dashed border-gray-300 rounded-2xl p-4 sm:p-5 min-w-[130px] flex-1">
+                  <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">Next Antardasha</div>
+                  <div className="font-bold text-dark-navy text-xl sm:text-2xl mb-1 font-serif">{nextAntardasha.planet}</div>
                   {(nextAntardasha.start || nextAntardasha.end) && (
-                    <div className="text-[11px] text-gray-500 leading-tight">{nextAntardasha.start} - {nextAntardasha.end}</div>
+                    <div className="text-xs text-gray-500 font-normal leading-tight">
+                      {nextAntardasha.start && nextAntardasha.end ? `${nextAntardasha.start} - ${nextAntardasha.end}` : (nextAntardasha.start || nextAntardasha.end)}
+                    </div>
                   )}
                 </div>
               )}
@@ -446,125 +449,74 @@ const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDir
         )}
 
         {/* 2. Spiritual Growth Card (Dynamic from API) */}
-        <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 flex flex-col justify-between min-h-[150px]">
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-bold text-dark-navy text-sm sm:text-base font-serif">
-                {spiritualGrowth?.title}
-              </h3>
-
-            </div>
-            <div className="w-full h-px bg-black/5 mb-3"></div>
-          </div>
-          <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
-            {spiritualGrowth?.content}
-          </p>
-        </div>
-
-        {/* Strength Card - 5th Lord */}
-        {fifthLord && (
-          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 flex flex-col justify-center">
-            <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-              <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy">Karma (5th) House Potency</h3>
-              <span className="bg-[#C04921]/15 text-[#C04921] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">
-                5th Lord: {fifthLord.planet} in {fifthLord.sign} ({fifthLord.house}H)
-              </span>
+        {spiritualGrowth?.content && (
+          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 flex flex-col justify-between min-h-[150px]">
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-bold text-dark-navy text-sm sm:text-base font-serif">
+                  {spiritualGrowth?.title || "Spiritual Growth"}
+                </h3>
+              </div>
+              <div className="w-full h-px bg-black/5 mb-3"></div>
             </div>
             <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
-              {fifthLord.statement}
+              {spiritualGrowth?.content}
             </p>
-            {fifthLord.area && (
-              <div className="mt-2.5 pt-2 border-t border-black/5 text-[11px] font-medium text-gray-500">
-                <span className="text-[#C04921] font-bold">Karmic Life Areas:</span> {fifthLord.area}
-              </div>
-            )}
           </div>
         )}
 
-        {/* Planet in 5th House / Primary Karma Card */}
-        {planetInFifth ? (
-          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-[#C04921]/20 flex flex-col justify-center relative">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-[9px] font-bold text-[#C04921] uppercase tracking-wider bg-[#C04921]/10 px-2 py-0.5 rounded-full">
-                {planetInFifth.planet} in 5th House
-              </span>
-              {planetInFifth.area && (
-                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
-                  {planetInFifth.area}
-                </span>
-              )}
-            </div>
-            <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy mb-2">
-              {planetInFifth.area ? `Karmic Focus: ${planetInFifth.area}` : "5th House Placement"}
-            </h3>
-            <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
-              {planetInFifth.content || planetInFifth.statement}
-            </p>
-          </div>
-        ) : primaryKarmaItem ? (
-          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-[#C04921]/20 flex flex-col justify-center relative">
-            {primaryKarmaItem.area && (
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-[9px] font-bold text-[#C04921] uppercase tracking-wider bg-[#C04921]/10 px-2 py-0.5 rounded-full">
-                  {primaryKarmaItem.area}
-                </span>
-              </div>
-            )}
-            <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy mb-2">
-              Primary Karmic Pattern
-            </h3>
-            <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
-              {primaryKarmaItem.statement}
-            </p>
-          </div>
-        ) : null}
-
-        {/* Insight Card - Soul Mastery */}
+        {/* 3. Soul Mastery Card (Real-Time from API) */}
         {soulMastery && (
-          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5">
-            <div className="flex flex-wrap items-center gap-2 mb-2.5">
-              {soulMastery.label && (
-                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
-                  {soulMastery.label}
-                </span>
+          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 flex flex-col justify-between min-h-[150px]">
+            <div>
+              <div className="flex flex-wrap items-center gap-2 mb-2.5">
+                {soulMastery.label && (
+                  <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
+                    {soulMastery.label}
+                  </span>
+                )}
+                {soulMastery.badge && (
+                  <div className="bg-[#C04921]/15 text-[#C04921] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full flex items-center gap-1.5">
+                    {soulMastery.badge}
+                  </div>
+                )}
+              </div>
+              {soulMastery.title && (
+                <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy mb-2">
+                  {soulMastery.title}
+                </h3>
               )}
-              {soulMastery.badge && (
-                <div className="bg-[#C04921]/15 text-[#C04921] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full flex items-center gap-1.5">
-                  {soulMastery.badge}
-                </div>
-              )}
+              <div className="w-full h-px bg-black/5 mb-3"></div>
             </div>
-            {soulMastery.title && (
-              <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy mb-2">
-                {soulMastery.title}
-              </h3>
-            )}
             <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
               {soulMastery.content || soulMastery.statement}
             </p>
           </div>
         )}
 
-        {/* Insight Card - 5th House */}
+        {/* 4. 5th House Card (Real-Time from API) */}
         {fifthHouse && (
-          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5">
-            <div className="flex flex-wrap items-center gap-2 mb-2.5">
-              {fifthHouse.label && (
-                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
-                  {fifthHouse.label}
-                </span>
+          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 flex flex-col justify-between min-h-[150px]">
+            <div>
+              <div className="flex flex-wrap items-center gap-2 mb-2.5">
+                {fifthHouse.label && (
+                  <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
+                    {fifthHouse.label}
+                  </span>
+                )}
+                {fifthHouse.badge && (
+                  <div className="bg-[#C04921]/15 text-[#C04921] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">
+                    {fifthHouse.badge}
+                  </div>
+                )}
+              </div>
+              {fifthHouse.title && (
+                <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy mb-2">
+                  {fifthHouse.title}
+                </h3>
               )}
-              {fifthHouse.badge && (
-                <div className="bg-[#C04921]/15 text-[#C04921] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">
-                  {fifthHouse.badge}
-                </div>
-              )}
+              <div className="w-full h-px bg-black/5 mb-3"></div>
             </div>
-            {fifthHouse.title && (
-              <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy mb-2">
-                {fifthHouse.title}
-              </h3>
-            )}
             <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
               {fifthHouse.content || fifthHouse.statement}
             </p>
@@ -573,36 +525,30 @@ const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDir
 
       </div>
 
-      {/* 5. Summary & Direction Banner */}
+      {/* 5. Dominant Theme Banner (Rendered dynamically if provided by API) */}
       {dominantTheme && (
         <div className="bg-[#C04921]/15 text-[#C04921] text-xs sm:text-[13px] font-medium p-3.5 sm:p-4 rounded-xl mb-5 border border-[#C04921]/10">
           {dominantTheme}
         </div>
       )}
 
-      {/* Soul's Direction Card */}
+      {/* Soul's Direction Card (Real-Time from API) */}
       {soulDirection?.content && (
-        <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 mb-8">
-          <div className="flex items-start gap-2.5 mb-1.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-green-500 mt-1 flex-shrink-0 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
-            <div>
-              {soulDirection.title && (
-                <h3 className="text-sm sm:text-[14.5px] font-bold text-dark-navy mb-0.5">
-                  {soulDirection.title}
-                </h3>
-              )}
-              {soulDirection.label && (
-                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
-                  {soulDirection.label.startsWith('·') ? soulDirection.label : `· ${soulDirection.label}`}
-                </span>
-              )}
-            </div>
+        <div className="bg-[#C04921]/10 border border-[#C04921]/20 rounded-2xl p-5 sm:p-6 mb-8 text-[#C04921] shadow-sm">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-2 h-2 rounded-full bg-[#C04921]"></div>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#C04921]/80">
+              {soulDirection.label || soulDirection.title || "Your Soul's Direction"}
+            </span>
           </div>
-          <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed mt-1 pl-5">
+          <p className="text-xs sm:text-[13.5px] font-medium leading-relaxed m-0">
             {soulDirection.content}
           </p>
         </div>
       )}
+
+      {/* Pricing Component below Soul's Direction */}
+      <Pricing />
 
     </div>
   );
