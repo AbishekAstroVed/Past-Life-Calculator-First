@@ -13,7 +13,7 @@ const HeroContent = ({ onCtaClick }) => {
       </h1>
 
       <p className="text-sm sm:text-[15px] md:text-base text-[#4a4a4a] max-w-[92%] leading-relaxed mt-1.5">
-        Your Ketu, 12th house and the Rahu-Ketu axis reveal<br className="hidden lg:block" /> where your soul has been. Discover your past-life pattern<br className="hidden lg:block" /> — free, in seconds.
+        Your 5th house and its lord reveal the karmic patterns carried from past births. Discover your past-life karma and the lessons reflected in your birth chart — free, in seconds.
       </p>
 
       {/* Feature Highlight Pills */}
@@ -24,7 +24,7 @@ const HeroContent = ({ onCtaClick }) => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </span>
-          <span className="font-semibold text-[#1a1a1a]">Ketu & 12th house</span>
+          <span className="font-semibold text-[#1a1a1a]">5th House & Its Lord</span>
         </div>
 
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-sm border border-black/[0.06] shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:border-[#C04921]/30 hover:shadow-[0_4px_12px_rgba(192,73,33,0.08)] hover:-translate-y-0.5 transition-all duration-200">
@@ -76,7 +76,7 @@ const HeroContent = ({ onCtaClick }) => {
                 <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#C04921]">Reads</span>
               </div>
               <span className="font-serif font-bold text-sm md:text-[15px] text-[#1a1a1a] tracking-tight block truncate mt-0.5">
-                Ketu + 12th
+                5th House
               </span>
             </div>
           </div>
