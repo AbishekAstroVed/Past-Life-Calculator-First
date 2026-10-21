@@ -1,72 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDirection }) => {
-  const [internalReport, setInternalReport] = useState(() => {
-    if (propReportData) return propReportData;
-    try {
-      const stored = localStorage.getItem('past_life_report');
-      return stored ? JSON.parse(stored) : null;
-    } catch {
-      return null;
-    }
-  });
-
-  const [isLoading, setIsLoading] = useState(!propReportData && !internalReport);
+  const [internalReport, setInternalReport] = useState(propReportData || null);
 
   // Sync prop changes whenever user submits form
   useEffect(() => {
     if (propReportData) {
       setInternalReport(propReportData);
-      setIsLoading(false);
     }
   }, [propReportData]);
-
-  // If no report in prop or state, check localStorage using the user's actual submitted details
-  useEffect(() => {
-    if (!internalReport && !propReportData) {
-      let active = true;
-
-      let savedDetails = null;
-      try {
-        const storedDetails = localStorage.getItem('past_life_user_details');
-        if (storedDetails) savedDetails = JSON.parse(storedDetails);
-      } catch (_) { }
-
-      // Only auto-fetch if real user details exist in localStorage from lead form
-      if (!savedDetails) {
-        setIsLoading(false);
-        return;
-      }
-
-      setIsLoading(true);
-      const apiUrl = import.meta.env.VITE_BACKEND_URL || 'https://sprint-common-nutlike.ngrok-free.dev/past-life/report';
-      fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': 'true'
-        },
-        body: JSON.stringify(savedDetails)
-      })
-        .then(r => r.json())
-        .then(data => {
-          if (active && data) {
-            setInternalReport(data);
-            try {
-              localStorage.setItem('past_life_report', JSON.stringify(data));
-            } catch (_) { }
-          }
-        })
-        .catch(err => {
-          console.warn('Real-time report auto-fetch error:', err);
-        })
-        .finally(() => {
-          if (active) setIsLoading(false);
-        });
-
-      return () => { active = false; };
-    }
-  }, [internalReport, propReportData]);
 
   const activeReport = propReportData || internalReport;
 

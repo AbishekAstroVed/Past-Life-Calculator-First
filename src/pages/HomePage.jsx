@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import HeroContent from '../components/HeroContent/HeroContent';
 import LeadForm from '../components/LeadForm/LeadForm';
 import Features from '../components/Features/Features';
@@ -10,22 +10,16 @@ import Testimonials from '../components/Testimonials/Testimonials';
 import FAQ from '../components/FAQ/FAQ';
 
 const HomePage = () => {
-  const [reportData, setReportData] = useState(() => {
-    try {
-      const stored = localStorage.getItem('past_life_report');
-      return stored ? JSON.parse(stored) : null;
-    } catch {
-      return null;
-    }
-  });
-  const [showReport, setShowReport] = useState(() => {
-    try {
-      return Boolean(localStorage.getItem('past_life_report'));
-    } catch {
-      return false;
-    }
-  });
+  const [reportData, setReportData] = useState(null);
+  const [showReport, setShowReport] = useState(false);
   const [showFormModal, setShowFormModal] = useState(false);
+
+  useEffect(() => {
+    try {
+      localStorage.removeItem('past_life_report');
+      localStorage.removeItem('past_life_user_details');
+    } catch (_) {}
+  }, []);
 
   return (
     <>

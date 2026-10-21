@@ -400,12 +400,6 @@ const LeadForm = ({ onReportReady }) => {
       }
 
       reportData = await response.json();
-      try {
-        localStorage.setItem('past_life_report', JSON.stringify(reportData));
-        localStorage.setItem('past_life_user_details', JSON.stringify(payload));
-      } catch (err) {
-        console.warn('Could not store report in localStorage:', err);
-      }
     } catch (err) {
       console.error('Error submitting lead form to backend:', err);
       setErrorMessage(err.message || 'Error connecting to the Vedic report API. Please try again.');
