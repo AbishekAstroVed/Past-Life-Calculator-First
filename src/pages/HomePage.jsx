@@ -18,7 +18,7 @@ const HomePage = () => {
     try {
       localStorage.removeItem('past_life_report');
       localStorage.removeItem('past_life_user_details');
-    } catch (_) {}
+    } catch (_) { }
   }, []);
 
   return (
@@ -62,8 +62,8 @@ const HomePage = () => {
                 }}
               >
                 <img
-                  src="/orange_human_karma_hero.jpg"
-                  alt="Vedic Past Life Karma Meditation"
+                  src="/radiant_real_human_hero.jpg"
+                  alt="Vedic Past Life Meditation Seeker"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -98,7 +98,7 @@ const HomePage = () => {
 
       <Features />
 
-      <div className="relative z-10 max-w-[1200px] mx-auto p-6 md:p-8 w-full mt-4 md:mt-12">
+      <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-8 pt-2 md:pt-4 pb-1 md:pb-2 w-full mt-2 md:mt-4">
         <div className="text-center mb-10 md:mb-16">
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="w-12 h-[2px] bg-[#C04921]"></div>
@@ -109,12 +109,12 @@ const HomePage = () => {
             <div className="w-12 h-[2px] bg-[#C04921]"></div>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-[2.15rem] text-dark-navy font-bold font-serif mb-3 drop-shadow-sm">What's Inside <span className="text-[#C04921]">Your Report</span></h2>
-          <p className="text-gray-500 text-sm md:text-[15px] max-w-md mx-auto leading-relaxed">A complete, personalised reading of your karmic story, broken down into 6 profound chapters.</p>
+          <p className="text-gray-500 text-sm md:text-[15px] max-w-3xl mx-auto leading-relaxed md:whitespace-nowrap">A complete, personalised reading of your karmic story, broken down into 6 profound chapters.</p>
         </div>
         <div className="mb-12 md:mb-20">
           <ReportDetails />
         </div>
-        <div className="flex justify-center mb-8 md:mb-12">
+        <div className="flex justify-center mb-0">
           <Pricing />
         </div>
       </div>
@@ -127,10 +127,10 @@ const HomePage = () => {
       {/* Final CTA Section */}
       <div className="w-full bg-transparent pb-20 md:pb-28 px-6 md:px-8">
         <div className="w-full max-w-[700px] mx-auto text-center">
-          <h2 className="text-3xl md:text-[40px] text-[#1a1a1a] font-bold font-serif mb-4 leading-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-[32px] text-[#1a1a1a] font-bold font-serif mb-3 leading-tight">
             Ready for the Full Story?
           </h2>
-          <p className="text-gray-600 text-sm md:text-base mb-8">
+          <p className="text-gray-600 text-xs sm:text-sm md:text-[15px] mb-6 md:mb-8">
             Your free result is a glimpse. The full Past Life Report tells your whole karmic story.
           </p>
           <Pricing />

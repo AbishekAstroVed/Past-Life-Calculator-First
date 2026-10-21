@@ -534,14 +534,14 @@ const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDir
 
       {/* Soul's Direction Card (Real-Time from API) */}
       {soulDirection?.content && (
-        <div className="bg-[#C04921]/10 border border-[#C04921]/20 rounded-2xl p-5 sm:p-6 mb-8 text-[#C04921] shadow-sm">
-          <div className="flex items-center gap-2 mb-2">
+        <div className="bg-white border border-black/[0.08] rounded-2xl p-5 sm:p-6 mb-8 text-[#1a1a1a] shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
+          <div className="flex items-center gap-2 mb-2.5">
             <div className="w-2 h-2 rounded-full bg-[#C04921]"></div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#C04921]/80">
+            <span className="text-[10.5px] font-bold uppercase tracking-wider ">
               {soulDirection.label || soulDirection.title || "Your Soul's Direction"}
             </span>
           </div>
-          <p className="text-xs sm:text-[13.5px] font-medium leading-relaxed m-0">
+          <p className="text-xs sm:text-[14px] font-medium leading-relaxed m-0 text-[#1a1a1a]">
             {soulDirection.content}
           </p>
         </div>

@@ -48,7 +48,7 @@ const Benefits = () => {
   ];
 
   return (
-    <div className="relative w-full pt-8 md:pt-14 pb-10 md:pb-16 bg-transparent">
+    <div className="relative w-full pt-0 md:pt-2 pb-10 md:pb-16 bg-transparent">
       <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-8">
 
         {/* Section Heading */}
