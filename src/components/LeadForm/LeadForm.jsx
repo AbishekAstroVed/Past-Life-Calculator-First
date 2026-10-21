@@ -188,7 +188,7 @@ const CityAutocomplete = ({ value, country, onChange, name, placeholder, icon: I
     }
     setIsLoading(true);
     try {
-      const locationBase = import.meta.env.VITE_LOCATION_API_URL;
+      const locationBase = import.meta.env.VITE_LOCATION_API_URL || " https://webservice.astroved.com/Api/Panchang/PopulateCityBycountry";
       const apiUrl = `${locationBase}/${encodeURIComponent(country)}/${encodeURIComponent(searchTerm)}`;
       const response = await fetch(apiUrl, {
         headers: {
@@ -303,7 +303,7 @@ const LeadForm = ({ onReportReady }) => {
     let reportData = null;
 
     try {
-      const locationBase = import.meta.env.VITE_LOCATION_API_URL;
+      const locationBase = import.meta.env.VITE_LOCATION_API_URL || "https://webservice.astroved.com/Api/Panchang/PopulateCityBycountry";
 
       // 1. Resolve location data strictly from Location API
       let geoCity = formData.city.trim();
