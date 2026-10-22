@@ -224,12 +224,17 @@ const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDir
           Your free result reveals the theme. The full Past Life Report decodes your karmic debts, the relationships carried over, why patterns repeat, and the remedies to clear them.
         </p>
 
-        <button className="relative overflow-hidden bg-[#C04921] text-white border-none rounded-lg px-5 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-[13.5px] font-bold cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_20px_rgba(192,73,33,0.2)] z-10 group hover:bg-[#a63d1a]">
+        <a
+          href="https://www.astroved.com/Customized-Reports-Karmic-Astrology-Report-Past-Life-Influence-Report--P399.aspx"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative overflow-hidden bg-[#C04921] text-white border-none rounded-lg px-5 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-[13.5px] font-bold cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_20px_rgba(192,73,33,0.2)] z-10 group hover:bg-[#a63d1a] inline-flex items-center justify-center no-underline"
+        >
           <span className="relative z-10 flex items-center justify-center gap-1.5 drop-shadow-sm">
             Get My Past Life Report
             <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </span>
-        </button>
+        </a>
       </div>
 
       {/* 2. Birth Chart Component */}
@@ -429,18 +434,15 @@ const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDir
       </div>
 
       {/* 4. Metrics & Insights Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4 mb-5">
 
         {/* 1. Past-Life Karma Card (Real-Time from API) */}
         {karmaContent && (
-          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 flex flex-col justify-between min-h-[150px]">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-bold text-dark-navy text-sm sm:text-base font-serif">
-                  {karmaTitle}
-                </h3>
-              </div>
-              <div className="w-full h-px bg-black/5 mb-3"></div>
+          <div className="bg-white rounded-xl p-3.5 sm:p-4 shadow-sm border border-black/5 flex flex-col">
+            <div className="border-b border-black/[0.06] pb-1 mb-1.5">
+              <h3 className="font-bold text-dark-navy text-sm sm:text-base font-serif leading-tight">
+                {karmaTitle}
+              </h3>
             </div>
             <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
               {karmaContent}
@@ -450,14 +452,11 @@ const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDir
 
         {/* 2. Spiritual Growth Card (Dynamic from API) */}
         {spiritualGrowth?.content && (
-          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 flex flex-col justify-between min-h-[150px]">
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-bold text-dark-navy text-sm sm:text-base font-serif">
-                  {spiritualGrowth?.title || "Spiritual Growth"}
-                </h3>
-              </div>
-              <div className="w-full h-px bg-black/5 mb-3"></div>
+          <div className="bg-white rounded-xl p-3.5 sm:p-4 shadow-sm border border-black/5 flex flex-col">
+            <div className="border-b border-black/[0.06] pb-1 mb-1.5">
+              <h3 className="font-bold text-dark-navy text-sm sm:text-base font-serif leading-tight">
+                {spiritualGrowth?.title || "Spiritual Growth"}
+              </h3>
             </div>
             <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
               {spiritualGrowth?.content}
@@ -467,26 +466,27 @@ const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDir
 
         {/* 3. Soul Mastery Card (Real-Time from API) */}
         {soulMastery && (
-          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 flex flex-col justify-between min-h-[150px]">
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mb-2.5">
-                {soulMastery.label && (
-                  <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
-                    {soulMastery.label}
-                  </span>
-                )}
-                {soulMastery.badge && (
-                  <div className="bg-[#C04921]/15 text-[#C04921] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full flex items-center gap-1.5">
-                    {soulMastery.badge}
-                  </div>
-                )}
-              </div>
+          <div className="bg-white rounded-xl p-3.5 sm:p-4 shadow-sm border border-black/5 flex flex-col">
+            <div className="border-b border-black/[0.06] pb-1 mb-1.5">
+              {(soulMastery.label || soulMastery.badge) && (
+                <div className="flex flex-wrap items-center gap-1.5 mb-1">
+                  {soulMastery.label && (
+                    <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
+                      {soulMastery.label}
+                    </span>
+                  )}
+                  {soulMastery.badge && (
+                    <div className="bg-[#C04921]/15 text-[#C04921] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full flex items-center gap-1.5">
+                      {soulMastery.badge}
+                    </div>
+                  )}
+                </div>
+              )}
               {soulMastery.title && (
-                <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy mb-2">
+                <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy leading-tight">
                   {soulMastery.title}
                 </h3>
               )}
-              <div className="w-full h-px bg-black/5 mb-3"></div>
             </div>
             <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
               {soulMastery.content || soulMastery.statement}
@@ -496,26 +496,27 @@ const WelcomeContent = ({ reportData: propReportData, soulDirection: propSoulDir
 
         {/* 4. 5th House Card (Real-Time from API) */}
         {fifthHouse && (
-          <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-black/5 flex flex-col justify-between min-h-[150px]">
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mb-2.5">
-                {fifthHouse.label && (
-                  <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
-                    {fifthHouse.label}
-                  </span>
-                )}
-                {fifthHouse.badge && (
-                  <div className="bg-[#C04921]/15 text-[#C04921] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">
-                    {fifthHouse.badge}
-                  </div>
-                )}
-              </div>
+          <div className="bg-white rounded-xl p-3.5 sm:p-4 shadow-sm border border-black/5 flex flex-col">
+            <div className="border-b border-black/[0.06] pb-1 mb-1.5">
+              {(fifthHouse.label || fifthHouse.badge) && (
+                <div className="flex flex-wrap items-center gap-1.5 mb-1">
+                  {fifthHouse.label && (
+                    <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
+                      {fifthHouse.label}
+                    </span>
+                  )}
+                  {fifthHouse.badge && (
+                    <div className="bg-[#C04921]/15 text-[#C04921] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">
+                      {fifthHouse.badge}
+                    </div>
+                  )}
+                </div>
+              )}
               {fifthHouse.title && (
-                <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy mb-2">
+                <h3 className="text-sm sm:text-base font-bold font-serif text-dark-navy leading-tight">
                   {fifthHouse.title}
                 </h3>
               )}
-              <div className="w-full h-px bg-black/5 mb-3"></div>
             </div>
             <p className="text-xs sm:text-[12.5px] text-gray-600 leading-relaxed">
               {fifthHouse.content || fifthHouse.statement}

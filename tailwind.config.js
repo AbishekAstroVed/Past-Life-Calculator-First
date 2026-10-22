@@ -17,6 +17,10 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         serif: ['Playfair Display', 'Georgia', 'serif'],
+        outfit: ['Outfit', 'sans-serif'],
+        lora: ['Lora', 'Georgia', 'serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        cinzel: ['Cinzel', 'serif'],
       },
       animation: {
         'float': 'float 8s ease-in-out infinite',
